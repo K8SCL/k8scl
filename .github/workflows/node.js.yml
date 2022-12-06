@@ -20,60 +20,30 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - name: Checkout
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm install -g yarn
+      - run: yarn && yarn build
+      - run: mv ./docs/.vuepress/dist /home/${USER}/dist/ && cd /home/${USER}/dist/ && ls -al
+
+      - name: checkout gh-pages
         uses: actions/checkout@v2.5.0
         with:
           ref: gh-pages
-
       - name: Commit files
         run: |
           git config --local user.email "1285837374@qq.com"
           git config --local user.name "github-actions[bot]"
-          git branch
-          date > generated.txt
-          ls -al
+
+          rm -rf *
+          git commit -a -m "remove all files"
+
+          mv /home/${USER}/dist ./
           git add .
-          git commit -m "generated"
+          git commit -a -m "deploy file by github-actions[bot]"
           git push -f
-
-          # git checkout -b gh-pages origin/gh-pages
-          # git branch
-          ls -al
-          # git checkout -q --track origin/gh-pages
-          # echo "current dir:"
-          # ls -al
-          # rm -rf *
-          # git commit -a -m "remove all files"
-          # mv /home/${USER}/dist ./
-          # echo "current dir:"
-          # ls -al
-          # rm -rf *
-          # git commit -a -m "fill deploy files"
-          # git remote --verbose
-          # git push -f
-
-      # - name: Use Node.js ${{ matrix.node-version }}
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
-      #     cache: "npm"
-      # - run: npm install -g yarn
-      # - run: yarn && yarn build
-      # - run: mv ./docs/.vuepress/dist /home/${USER}/dist/ && cd /home/${USER}/dist/ && ls -al
-      # - name: Commit files
-      #   run: |
-      #     git config --local user.email "1285837374@qq.com"
-      #     git config --local user.name "github-actions[bot]"
-      #     git checkout -q --track origin/gh-pages
-      #     echo "current dir:"
-      #     ls -al
-      #     rm -rf *
-      #     git commit -a -m "remove all files"
-      #     mv /home/${USER}/dist ./
-      #     echo "current dir:"
-      #     ls -al
-      #     rm -rf *
-      #     git commit -a -m "fill deploy files"
-      #     git remote --verbose
-      #     git push -f
-      # - run: echo "Deploy Success"
+      - run: echo "Deploy Success"
