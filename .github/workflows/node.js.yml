@@ -43,5 +43,6 @@ jobs:
           ls -al
           rm -rf *
           git commit -a -m "fill deploy files"
+          git remote --verbose
           git push -f
       - run: echo "Deploy Success"
