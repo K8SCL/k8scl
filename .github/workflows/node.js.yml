@@ -21,28 +21,46 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: npm install -g yarn
-      - run: yarn && yarn build
-      - run: mv ./docs/.vuepress/dist /home/${USER}/dist/ && cd /home/${USER}/dist/ && ls -al
       - name: Commit files
         run: |
           git config --local user.email "1285837374@qq.com"
           git config --local user.name "github-actions[bot]"
-          git checkout -q --track origin/gh-pages
-          echo "current dir:"
-          ls -al
-          rm -rf *
-          git commit -a -m "remove all files"
-          mv /home/${USER}/dist ./
-          echo "current dir:"
-          ls -al
-          rm -rf *
-          git commit -a -m "fill deploy files"
-          git remote --verbose
-          git push -f
-      - run: echo "Deploy Success"
+          git branch -a
+          # git checkout -q --track origin/gh-pages
+          # echo "current dir:"
+          # ls -al
+          # rm -rf *
+          # git commit -a -m "remove all files"
+          # mv /home/${USER}/dist ./
+          # echo "current dir:"
+          # ls -al
+          # rm -rf *
+          # git commit -a -m "fill deploy files"
+          # git remote --verbose
+          # git push -f
+
+      # - name: Use Node.js ${{ matrix.node-version }}
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
+      #     cache: "npm"
+      # - run: npm install -g yarn
+      # - run: yarn && yarn build
+      # - run: mv ./docs/.vuepress/dist /home/${USER}/dist/ && cd /home/${USER}/dist/ && ls -al
+      # - name: Commit files
+      #   run: |
+      #     git config --local user.email "1285837374@qq.com"
+      #     git config --local user.name "github-actions[bot]"
+      #     git checkout -q --track origin/gh-pages
+      #     echo "current dir:"
+      #     ls -al
+      #     rm -rf *
+      #     git commit -a -m "remove all files"
+      #     mv /home/${USER}/dist ./
+      #     echo "current dir:"
+      #     ls -al
+      #     rm -rf *
+      #     git commit -a -m "fill deploy files"
+      #     git remote --verbose
+      #     git push -f
+      # - run: echo "Deploy Success"
