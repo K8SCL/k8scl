@@ -51,11 +51,12 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
 
     bodyBgImg: [
       {
-        url: "https://files.etoury.com/brook-pdf/img/dark-bg1.jpg",
+        url: "https://cdn.staticaly.com/gh/k8scl/assets-repo@master/k8scl/img/dark-bg1.jpg",
+
         mode: "dark",
       },
       {
-        url: "https://files.etoury.com/brook-pdf/img/light-bg2.jpg",
+        url: "https://cdn.staticaly.com/gh/k8scl/assets-repo@master/k8scl/img/light-bg2.jpg",
         mode: "light",
         opacity: 0.9
       },
