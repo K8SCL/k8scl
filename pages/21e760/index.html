@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>（二）编译运行并调试源码 | k8scl</title>
+  <meta name="generator" content="VuePress 1.9.5">
+
+  <script src="/assets/js/xmind-embed-viewer.js"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.js"></script>
+  <script type="text/javascript" src="/assets/js/markdown-it-drawio-viewer.js"></script>
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.4.0/jquery.js"></script>
+
+
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="description" content="K8s 源码学习、二次开发、自定义组件开发">
+    <meta name="keywords" content="技术文档,kubernetes,k8s,go,golang">
+    <meta name="theme-color" content="#11a8cd">
+  
+  <link rel="preload" href="/assets/css/0.styles.80a34008.css" as="style"><link rel="preload" href="/assets/js/app.e34e77c9.js" as="script"><link rel="preload" href="/assets/js/2.60a89b72.js" as="script"><link rel="preload" href="/assets/js/3.d91ac3a8.js" as="script"><link rel="preload" href="/assets/js/9.48e3b464.js" as="script"><link rel="prefetch" href="/assets/js/10.e12a7455.js"><link rel="prefetch" href="/assets/js/11.262e0035.js"><link rel="prefetch" href="/assets/js/12.460bef00.js"><link rel="prefetch" href="/assets/js/13.2d811468.js"><link rel="prefetch" href="/assets/js/14.8904eaa4.js"><link rel="prefetch" href="/assets/js/15.ab930eeb.js"><link rel="prefetch" href="/assets/js/16.876c70db.js"><link rel="prefetch" href="/assets/js/4.74dc6133.js"><link rel="prefetch" href="/assets/js/5.69a191cc.js"><link rel="prefetch" href="/assets/js/6.2b730f2b.js"><link rel="prefetch" href="/assets/js/7.cfe31641.js"><link rel="prefetch" href="/assets/js/8.933df0bf.js">
+  <link rel="stylesheet" href="/assets/css/0.styles.80a34008.css">
+
+</head>
+
+<body class="theme-mode-light">
+  <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu have-body-img"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="k8scl" class="logo"> <span class="site-name can-hide">k8scl</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/pages/b99bda/" class="nav-link">Kubernetes 源码开发之旅</a></div> <a href="https://github.com/brook-w/blogs" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/logo.png"> <div class="blogger-info"><h3>brook-w</h3> <span>K8s 源码学习、二次开发、自定义组件开发</span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/pages/b99bda/" class="nav-link">Kubernetes 源码开发之旅</a></div> <a href="https://github.com/brook-w/blogs" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/pages/b99bda/" class="sidebar-link">（一）环境搭建</a></li><li><a href="/pages/21e760/" aria-current="page" class="active sidebar-link">（二）编译运行并调试源码</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/pages/21e760/#视频地址" class="sidebar-link">视频地址</a></li><li class="sidebar-sub-header level2"><a href="/pages/21e760/#编译和启动" class="sidebar-link">编译和启动</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/pages/21e760/#_1-编译" class="sidebar-link">1. 编译</a></li><li class="sidebar-sub-header level3"><a href="/pages/21e760/#_2-启动本地单节点集群" class="sidebar-link">2. 启动本地单节点集群</a></li><li class="sidebar-sub-header level4"><a href="/pages/21e760/#_1-启动集群" class="sidebar-link">1. 启动集群</a></li><li class="sidebar-sub-header level4"><a href="/pages/21e760/#_2-验证集群" class="sidebar-link">2. 验证集群</a></li><li class="sidebar-sub-header level3"><a href="/pages/21e760/#_3-启动过程中遇到的问题" class="sidebar-link">3. 启动过程中遇到的问题</a></li><li class="sidebar-sub-header level4"><a href="/pages/21e760/#_1-cni-下载不下来" class="sidebar-link">1. cni 下载不下来</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/pages/21e760/#调试源码" class="sidebar-link">调试源码</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/pages/21e760/#_1-开启编译选项" class="sidebar-link">1. 开启编译选项</a></li><li class="sidebar-sub-header level3"><a href="/pages/21e760/#_2-安装-dlv" class="sidebar-link">2. 安装 dlv</a></li><li class="sidebar-sub-header level3"><a href="/pages/21e760/#_3-调试-均支持远程调试-api-server" class="sidebar-link">3. 调试（均支持远程调试）（api-server）</a></li><li class="sidebar-sub-header level4"><a href="/pages/21e760/#_0-调试环境准备" class="sidebar-link">0. 调试环境准备</a></li><li class="sidebar-sub-header level5"><a href="/pages/21e760/#_1-获取启动参数" class="sidebar-link">1. 获取启动参数</a></li><li class="sidebar-sub-header level5"><a href="/pages/21e760/#_2-杀掉-kube-apiserver" class="sidebar-link">2. 杀掉 kube-apiserver</a></li><li class="sidebar-sub-header level4"><a href="/pages/21e760/#_1-利用-vscode-进行代码调试" class="sidebar-link">1. 利用 vscode 进行代码调试</a></li><li class="sidebar-sub-header level5"><a href="/pages/21e760/#_1-以-dlv-方式启动-kube-apiserver" class="sidebar-link">1. 以 dlv 方式启动 kube-apiserver</a></li><li class="sidebar-sub-header level5"><a href="/pages/21e760/#_2-生成配置文件-不会百度或者复制下面即可" class="sidebar-link">2. 生成配置文件（不会百度或者复制下面即可）</a></li><li class="sidebar-sub-header level5"><a href="/pages/21e760/#_3-开始调试" class="sidebar-link">3. 开始调试</a></li><li class="sidebar-sub-header level5"><a href="/pages/21e760/#_4-成功执行调试" class="sidebar-link">4. 成功执行调试：</a></li><li class="sidebar-sub-header level4"><a href="/pages/21e760/#_2-利用-goland-进行代码调试" class="sidebar-link">2. 利用 Goland 进行代码调试</a></li><li class="sidebar-sub-header level4"><a href="/pages/21e760/#_3-利用-命令行-进行代码调试" class="sidebar-link">3. 利用 命令行 进行代码调试</a></li><li class="sidebar-sub-header level5"><a href="/pages/21e760/#_1-以-dlv-方式启动-kube-apiserver-2" class="sidebar-link">1. 以 dlv 方式启动 kube-apiserver</a></li><li class="sidebar-sub-header level5"><a href="/pages/21e760/#_2-连接-dlv-connect" class="sidebar-link">2. 连接 dlv connect</a></li><li class="sidebar-sub-header level4"><a href="/pages/21e760/#_4-调试过程中注意事项" class="sidebar-link">4. 调试过程中注意事项</a></li><li class="sidebar-sub-header level5"><a href="/pages/21e760/#_1-dlv" class="sidebar-link">1. dlv</a></li><li class="sidebar-sub-header level5"><a href="/pages/21e760/#_2-kube-apiserver-参数" class="sidebar-link">2. kube-apiserver 参数</a></li></ul></li></ul></li><li><a href="/pages/f9a6c6/" class="sidebar-link">（三）API Server源码剖析</a></li><li><a href="/pages/0214d2/" class="sidebar-link">（四）Generic Server</a></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-deb3a48a><div class="articleInfo" data-v-deb3a48a><ul class="breadcrumbs" data-v-deb3a48a><li data-v-deb3a48a><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-deb3a48a></a></li> <li data-v-deb3a48a><a href="/k8scl/#Kubernetes 源码开发之旅" data-v-deb3a48a>Kubernetes 源码开发之旅</a></li></ul> <div class="info" data-v-deb3a48a><div title="作者" class="author iconfont icon-touxiang" data-v-deb3a48a><a href="https://github.com/brook-w" target="_blank" title="作者" class="beLink" data-v-deb3a48a>brook-w</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-deb3a48a><a href="javascript:;" data-v-deb3a48a>2022-12-01</a></div> <!----> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABKFJREFUSA3tVl1oFVcQnrMbrak3QUgkya1akpJYcrUtIqW1JvFBE9LiQ5v6JmJpolbMg32rVrhgoYK0QiMY6i9Y6EMaW5D+xFJaTYItIuK2Kr3+BJNwkxBj05sQY3b3nM6cs2dv9t7NT/vQJw/sndk5M/PNzJkzewGerP+pAmy+ON8lLzUJgA8ZYxYIYZmGYRnctDaWvJJAmTtfP1pvXsBCCPP8QFcCaRkZYACgDZFO4stNIcBCajEOlmmC9XpJ9bAGCaPaPmzPl32dvLSVu3BWCTQs0XQQ6g0DYgwLIoAZbBCdW/i+781o1VVlm/410mw4h06Y7bIPHNyWDyL4FHkX03Q8SrzNhZTZriieckWt7cL6MM85YcLpsi/7O9/iXFT6MswI0DmmpkSaJ0qLxFIm3+i1THHB3zmBH3PYx9CcykcLOeQVVa7QtdxTgQgEleX2AjHYfwA+2ddV77ruGoJUbhGDI09YSNXyMpUt5ylOzxgbUmtOp7NmbNt8v3arjTBfYELmLUV+M+nSawNNAUqpT3ClJWg5I3BLT+cGW/DXNGCa6tx1aakCGEigArTn4TDIPdrXXYKCZNrHLMCOEPvHBlLQ99s9eHB7EB6NTki73CVPQ2F5MSx/uRQixfmq7rK0wYD8w8E905bnPDfwoWs/rfv93NWN/ZfvwsLIU7A09gxECyISeGJkHAau98L97tuw7NXnoPyNF8FcYGLGKsOs0mN3OEyec9esGW/ZEl945dTP34wlR2FZVQWU1q0Cw8Tr7p+hgLLNL0FPxx/Q35mA8aEUrH6nCgwEl0tn7wUiZYJnNRh6DK4UH/k0lfyrsBKdPVv/AriGIQcEDQZ65LBAGe2Rzui9Ybjz7XUppz1/uKBbyVPGkN3ZAeC6hr0x7Nr38N5+EqkoOm17xpoqR9ohQF55ERSvr4Dkr3chNfC3DMzGJlNBElW8w9nsGQvhNGIzDkXzCg8cLK951xHsFBlTJspJNi3ZFIMF2AeDV3q8DNOB+YHi6QTrChDIWDBRi5U5f+ZMfJLu3ccrqxtdxk4SKH336LFxSmkqefwU5T8fhdSdQf9IVKD6aNiwI/hnmcAZ91isYMJIaCUCx9W098+LgruikeTqzqqxKPUwqJyCPJiyemVVZBOijDGjD38Os0jOiSPL1z3SPjXNANbiNPXAdzTfukjjuknNBbyz3nwgTd3AVFqUJ5hpHlq9MveLnWwttUfoygBmvVjuikxND3znrhsELnZk7k+OjIGxeNEkomyLVta0xxn+HZhjBc4YZ/AFjHjz9u3xRZl2BN4aq9nFwWh16IrQ1aHHEd3j1+4/dB9OtH4e29A2H1DyHQRmOSfQZ1Fy7MHBTGB6J/Djq6p3OxyO2cB+4Car7v/o3GXgfAkj23+x9ID1Teoamo/SXcbvSf2PX7Vc8DdCmE1vN9di+32P9/5YR3vLnhCVGUWBjEkr3yh4H8v9CzmsbdhzOKzsJKM90iFdaTMjRPhGVsakRvOaRidljo6H6G7j+ctrJpsP+4COhDIl0La2+FS4+5mlocBaXY5QnGZysIBYoeSsl5qQzrSj/cgNrfuEzlWBfwA+EjrZyWUvpAAAAABJRU5ErkJggg==">（二）编译运行并调试源码<!----></h1>  <div class="theme-vdoing-content content__default"><h2 id="视频地址"><a href="#视频地址" class="header-anchor">#</a> <a href="https://www.bilibili.com/video/BV1JY4y1V7hj/?spm_id_from=333.999.0.0&amp;vd_source=62e2bbc859564f43d9cc06ff317aaa5e" target="_blank" rel="noopener noreferrer">视频地址<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></h2> <h2 id="编译和启动"><a href="#编译和启动" class="header-anchor">#</a> 编译和启动</h2> <h3 id="_1-编译"><a href="#_1-编译" class="header-anchor">#</a> 1. 编译</h3> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">cd</span> <span class="token variable">$GOPATH</span>/src/k8s.io/kubernetes
+
+<span class="token comment"># 编译单个组建：</span>
+<span class="token function">sudo</span> <span class="token function">make</span> <span class="token assign-left variable">WHAT</span><span class="token operator">=</span><span class="token string">&quot;cmd/kube-apiserver&quot;</span>
+
+<span class="token comment"># 编译所有组件：</span>
+<span class="token function">sudo</span> <span class="token function">make</span> all
+
+</code></pre></div><h3 id="_2-启动本地单节点集群"><a href="#_2-启动本地单节点集群" class="header-anchor">#</a> 2. 启动本地单节点集群</h3> <h4 id="_1-启动集群"><a href="#_1-启动集群" class="header-anchor">#</a> 1. 启动集群</h4> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">cd</span> <span class="token variable">$GOPATH</span>/src/k8s.io/kubernetes
+<span class="token function">sudo</span> <span class="token function">make</span> clean <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">make</span> all <span class="token comment"># 可选</span>
+<span class="token function">sudo</span> ./hack/local-up-cluster.sh
+</code></pre></div><details class="custom-block details"><summary>启动的正常输出</summary> <div class="language-sh extra-class"><pre class="language-sh"><code>make: 进入目录“/home/xing/go/src/k8s.io/kubernetes”
+make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: 进入目录“/home/xing/go/src/k8s.io/kubernetes”
++++ <span class="token punctuation">[</span><span class="token number">1201</span> <span class="token number">17</span>:08:55<span class="token punctuation">]</span> Building go targets <span class="token keyword">for</span> linux/amd64
+    k8s.io/kubernetes/hack/make-rules/helpers/go2make <span class="token punctuation">(</span>non-static<span class="token punctuation">)</span>
+make<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>: 离开目录“/home/xing/go/src/k8s.io/kubernetes”
++++ <span class="token punctuation">[</span><span class="token number">1201</span> <span class="token number">17</span>:09:08<span class="token punctuation">]</span> Building go targets <span class="token keyword">for</span> linux/amd64
+    k8s.io/kubernetes/cmd/kubectl <span class="token punctuation">(</span>static<span class="token punctuation">)</span>
+    k8s.io/kubernetes/cmd/kube-apiserver <span class="token punctuation">(</span>static<span class="token punctuation">)</span>
+    k8s.io/kubernetes/cmd/kube-controller-manager <span class="token punctuation">(</span>static<span class="token punctuation">)</span>
+    k8s.io/kubernetes/cmd/cloud-controller-manager <span class="token punctuation">(</span>non-static<span class="token punctuation">)</span>
+    k8s.io/kubernetes/cmd/kubelet <span class="token punctuation">(</span>non-static<span class="token punctuation">)</span>
+    k8s.io/kubernetes/cmd/kube-proxy <span class="token punctuation">(</span>static<span class="token punctuation">)</span>
+    k8s.io/kubernetes/cmd/kube-scheduler <span class="token punctuation">(</span>static<span class="token punctuation">)</span>
+make: 离开目录“/home/xing/go/src/k8s.io/kubernetes”
+API SERVER secure port is free, proceeding<span class="token punctuation">..</span>.
+Detected <span class="token function">host</span> and ready to start services.  Doing some housekeeping first<span class="token punctuation">..</span>.
+Using GO_OUT /home/xing/go/src/k8s.io/kubernetes/_output/local/bin/linux/amd64
+Starting services now<span class="token operator">!</span>
+Starting etcd
+etcd --advertise-client-urls http://127.0.0.1:2379 --data-dir /tmp/tmp.LNJCC3Y7Wu --listen-client-urls http://127.0.0.1:2379 --log-level<span class="token operator">=</span>warn <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span> <span class="token string">&quot;/tmp/etcd.log&quot;</span> <span class="token operator">&gt;</span>/dev/null
+Waiting <span class="token keyword">for</span> etcd to come up.
++++ <span class="token punctuation">[</span><span class="token number">1201</span> <span class="token number">17</span>:09:45<span class="token punctuation">]</span> On try <span class="token number">2</span>, etcd: <span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token string">&quot;health&quot;</span><span class="token builtin class-name">:</span><span class="token string">&quot;true&quot;</span>,<span class="token string">&quot;reason&quot;</span><span class="token builtin class-name">:</span><span class="token string">&quot;&quot;</span><span class="token punctuation">}</span>
+<span class="token punctuation">{</span><span class="token string">&quot;header&quot;</span>:<span class="token punctuation">{</span><span class="token string">&quot;cluster_id&quot;</span><span class="token builtin class-name">:</span><span class="token string">&quot;14841639068965178418&quot;</span>,<span class="token string">&quot;member_id&quot;</span><span class="token builtin class-name">:</span><span class="token string">&quot;10276657743932975437&quot;</span>,<span class="token string">&quot;revision&quot;</span><span class="token builtin class-name">:</span><span class="token string">&quot;2&quot;</span>,<span class="token string">&quot;raft_term&quot;</span><span class="token builtin class-name">:</span><span class="token string">&quot;2&quot;</span><span class="token punctuation">}</span><span class="token punctuation">}</span>Generating a RSA private key
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>.+++++
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>.+++++
+writing new private key to <span class="token string">'/var/run/kubernetes/server-ca.key'</span>
+-----
+Generating a RSA private key
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>+++++
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>+++++
+writing new private key to <span class="token string">'/var/run/kubernetes/client-ca.key'</span>
+-----
+Generating a RSA private key
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>.+++++
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>.+++++
+writing new private key to <span class="token string">'/var/run/kubernetes/request-header-ca.key'</span>
+-----
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:45 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generate received request
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:45 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> received CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:45 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generating key: rsa-2048
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:45 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> encoded CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:45 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> signed certificate with serial number <span class="token number">293151017665098086348880715532871957730156180132</span>
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:45 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generate received request
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:45 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> received CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:45 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generating key: rsa-2048
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:45 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> encoded CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:45 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> signed certificate with serial number <span class="token number">487348345664182233435909206222659454057143719021</span>
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:45 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generate received request
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:45 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> received CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:45 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generating key: rsa-2048
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> encoded CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> signed certificate with serial number <span class="token number">195819653141672173053279722256472095709163847153</span>
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generate received request
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> received CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generating key: rsa-2048
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> encoded CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> signed certificate with serial number <span class="token number">613544450701441397610845302043050839746564066359</span>
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generate received request
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> received CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generating key: rsa-2048
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> encoded CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> signed certificate with serial number <span class="token number">115061008643950752125067148135424784083397571613</span>
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generate received request
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> received CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generating key: rsa-2048
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> encoded CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> signed certificate with serial number <span class="token number">584615864316512973410633747924687800725528845655</span>
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generate received request
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> received CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generating key: rsa-2048
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> encoded CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> signed certificate with serial number <span class="token number">571089137347621389894999036328721562159155378791</span>
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generate received request
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> received CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:46 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generating key: rsa-2048
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:47 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> encoded CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:09:47 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> signed certificate with serial number <span class="token number">153203515574633399568421412669629167562151942413</span>
+Waiting <span class="token keyword">for</span> apiserver to come up
++++ <span class="token punctuation">[</span><span class="token number">1201</span> <span class="token number">17</span>:09:52<span class="token punctuation">]</span> On try <span class="token number">5</span>, apiserver: <span class="token builtin class-name">:</span> ok
+clusterrolebinding.rbac.authorization.k8s.io/kube-apiserver-kubelet-admin created
+clusterrolebinding.rbac.authorization.k8s.io/kubelet-csr created
+Cluster <span class="token string">&quot;local-up-cluster&quot;</span> set.
+use <span class="token string">'kubectl --kubeconfig=/var/run/kubernetes/admin-kube-aggregator.kubeconfig'</span> to use the aggregated API server
+serviceaccount/coredns created
+clusterrole.rbac.authorization.k8s.io/system:coredns created
+clusterrolebinding.rbac.authorization.k8s.io/system:coredns created
+configmap/coredns created
+deployment.apps/coredns created
+service/kube-dns created
+coredns addon successfully deployed.
+Checking CNI Installation at /opt/cni/bin
+CNI Installation not found at /opt/cni/bin
+CNI_PLUGINS_URL:https://ghps.cc/https://github.com/containernetworking/plugins/releases/download/v1.0.1/cni-plugins-linux-amd64-v1.0.1.tgz
+Installing CNI plugin binaries <span class="token punctuation">..</span>.
+5238fbb2767cbf6aae736ad97a7aa29167525dcd405196dfbc064672a730d3cf  /tmp/cni.amd64.tgz
+/tmp/cni.amd64.tgz: 成功
+./
+./macvlan
+./static
+./vlan
+./portmap
+./host-local
+./vrf
+./bridge
+./tuning
+./firewall
+./host-device
+./sbr
+./loopback
+./dhcp
+./ptp
+./ipvlan
+./bandwidth
+Configuring cni
+<span class="token punctuation">{</span>
+  <span class="token string">&quot;cniVersion&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;0.4.0&quot;</span>,
+  <span class="token string">&quot;name&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;containerd-net&quot;</span>,
+  <span class="token string">&quot;plugins&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token string">&quot;type&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;bridge&quot;</span>,
+      <span class="token string">&quot;bridge&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;cni0&quot;</span>,
+      <span class="token string">&quot;isGateway&quot;</span><span class="token builtin class-name">:</span> true,
+      <span class="token string">&quot;ipMasq&quot;</span><span class="token builtin class-name">:</span> true,
+      <span class="token string">&quot;promiscMode&quot;</span><span class="token builtin class-name">:</span> true,
+      <span class="token string">&quot;ipam&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+        <span class="token string">&quot;type&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;host-local&quot;</span>,
+        <span class="token string">&quot;ranges&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">[</span><span class="token punctuation">{</span>
+            <span class="token string">&quot;subnet&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;10.88.0.0/16&quot;</span>
+          <span class="token punctuation">}</span><span class="token punctuation">]</span>,
+          <span class="token punctuation">[</span><span class="token punctuation">{</span>
+            <span class="token string">&quot;subnet&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;2001:4860:4860::/64&quot;</span>
+          <span class="token punctuation">}</span><span class="token punctuation">]</span>
+        <span class="token punctuation">]</span>,
+        <span class="token string">&quot;routes&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span> <span class="token string">&quot;dst&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;0.0.0.0/0&quot;</span> <span class="token punctuation">}</span>,
+          <span class="token punctuation">{</span> <span class="token string">&quot;dst&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;::/0&quot;</span> <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>,
+    <span class="token punctuation">{</span>
+      <span class="token string">&quot;type&quot;</span><span class="token builtin class-name">:</span> <span class="token string">&quot;portmap&quot;</span>,
+      <span class="token string">&quot;capabilities&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token string">&quot;portMappings&quot;</span><span class="token builtin class-name">:</span> true<span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+WARNING <span class="token builtin class-name">:</span> The kubelet is configured to not fail even <span class="token keyword">if</span> swap is enabled<span class="token punctuation">;</span> production deployments should disable swap unless testing NodeSwap feature.
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:10:00 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generate received request
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:10:00 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> received CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:10:00 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generating key: rsa-2048
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:10:00 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> encoded CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:10:00 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> signed certificate with serial number <span class="token number">421978020129055193511090121764118686933107812863</span>
+kubelet <span class="token punctuation">(</span> <span class="token number">304932</span> <span class="token punctuation">)</span> is running.
+<span class="token function">wait</span> kubelet ready
+No resources found
+No resources found
+No resources found
+No resources found
+No resources found
+No resources found
+No resources found
+<span class="token number">127.0</span>.0.1   NotReady   <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>   2s    v1.24.0-dirty
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:10:16 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generate received request
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:10:16 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> received CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:10:16 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> generating key: rsa-2048
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:10:16 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> encoded CSR
+<span class="token number">2022</span>/12/01 <span class="token number">17</span>:10:16 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> signed certificate with serial number <span class="token number">592457083326791792374452832572534131669724027176</span>
+Create default storage class <span class="token keyword">for</span>
+storageclass.storage.k8s.io/standard created
+Local Kubernetes cluster is running. Press Ctrl-C to shut it down.
+
+Logs:
+  /tmp/kube-apiserver.log
+  /tmp/kube-controller-manager.log
+
+  /tmp/kube-proxy.log
+  /tmp/kube-scheduler.log
+  /tmp/kubelet.log
+
+To start using your cluster, you can <span class="token function">open</span> up another terminal/tab and run:
+
+  <span class="token builtin class-name">export</span> <span class="token assign-left variable">KUBECONFIG</span><span class="token operator">=</span>/var/run/kubernetes/admin.kubeconfig
+  cluster/kubectl.sh
+
+Alternatively, you can <span class="token function">write</span> to the default kubeconfig:
+
+  <span class="token builtin class-name">export</span> <span class="token assign-left variable">KUBERNETES_PROVIDER</span><span class="token operator">=</span>local
+
+  cluster/kubectl.sh config set-cluster <span class="token builtin class-name">local</span> <span class="token parameter variable">--server</span><span class="token operator">=</span>https://localhost:6443 --certificate-authority<span class="token operator">=</span>/var/run/kubernetes/server-ca.crt
+  cluster/kubectl.sh config set-credentials myself --client-key<span class="token operator">=</span>/var/run/kubernetes/client-admin.key --client-certificate<span class="token operator">=</span>/var/run/kubernetes/client-admin.crt
+  cluster/kubectl.sh config set-context <span class="token builtin class-name">local</span> <span class="token parameter variable">--cluster</span><span class="token operator">=</span>local <span class="token parameter variable">--user</span><span class="token operator">=</span>myself
+  cluster/kubectl.sh config use-context <span class="token builtin class-name">local</span>
+  cluster/kubectl.sh
+</code></pre></div></details> <h4 id="_2-验证集群"><a href="#_2-验证集群" class="header-anchor">#</a> 2. 验证集群</h4> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">cd</span> <span class="token variable">${GOPATH}</span>/src/k8s.io/kubernetes
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">KUBECONFIG</span><span class="token operator">=</span>/var/run/kubernetes/admin.kubeconfig
+cluster/kubectl.sh get nodes
+
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> Outpus:
+NAME        STATUS   ROLES    AGE    VERSION
+<span class="token number">127.0</span>.0.1   Ready    <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>   5m3s   v1.24.0-dirty
+</code></pre></div><p>部署资源</p> <div class="language-yaml extra-class"><pre class="language-yaml"><code><span class="token comment"># /home/${USER}/kube/yaml/test.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
+      <span class="token key atrule">image</span><span class="token punctuation">:</span> daocloud.io/library/nginx<span class="token punctuation">:</span>1.12.0<span class="token punctuation">-</span>alpine
+      <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+</code></pre></div><div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /home/<span class="token variable">${<span class="token environment constant">USER</span>}</span>/kube/yaml
+cluster/kubectl.sh create <span class="token parameter variable">-f</span> /home/<span class="token variable">${<span class="token environment constant">USER</span>}</span>/kube/yaml/test.yaml
+
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> Outputs:
+pod/nginx created
+
+cluster/kubectl.sh get po
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> Outputs:
+NAME    READY   STATUS              RESTARTS   AGE
+nginx   <span class="token number">0</span>/1     ContainerCreating   <span class="token number">0</span>          70s
+</code></pre></div><h3 id="_3-启动过程中遇到的问题"><a href="#_3-启动过程中遇到的问题" class="header-anchor">#</a> 3. 启动过程中遇到的问题</h3> <h4 id="_1-cni-下载不下来"><a href="#_1-cni-下载不下来" class="header-anchor">#</a> 1. cni 下载不下来</h4> <p>替换 <code>local-up-cluster.sh</code> 中的变量 <code>CNI_PLUGINS_URL</code></p> <p>也可以自己下载下来放到指定目录</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token assign-left variable">CNI_PLUGINS_URL</span><span class="token operator">=</span><span class="token string">&quot;https://ghps.cc/https://github.com/containernetworking/plugins/releases/download/<span class="token variable">${CNI_PLUGINS_TARBALL}</span>&quot;</span>
+<span class="token comment"># CNI_PLUGINS_URL=&quot;https://github.com/containernetworking/plugins/releases/download/${CNI_PLUGINS_TARBALL}&quot;</span>
+</code></pre></div><h2 id="调试源码"><a href="#调试源码" class="header-anchor">#</a> 调试源码</h2> <h3 id="_1-开启编译选项"><a href="#_1-开启编译选项" class="header-anchor">#</a> 1. 开启编译选项</h3> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">cd</span> <span class="token variable">$GOPATH</span>/src/k8s.io/kubernetes
+<span class="token function">sudo</span> <span class="token function">vim</span> ./hack/lib/golang.sh
+<span class="token comment"># 查找build_binaries()函数 vi语法</span>
+:/build_binaries<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+</code></pre></div><div class="language-sh extra-class"><pre class="language-sh"><code><span class="token assign-left variable">gogcflags</span><span class="token operator">=</span><span class="token string">&quot;all=-trimpath=<span class="token variable">${trimroot}</span> <span class="token variable">${GOGCFLAGS<span class="token operator">:-</span>}</span>&quot;</span>
+<span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token string">&quot;<span class="token variable">${DBG<span class="token operator">:-</span>}</span>&quot;</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token comment"># Debugging - disable optimizations and inlining.</span>
+    <span class="token assign-left variable">gogcflags</span><span class="token operator">=</span><span class="token string">&quot;<span class="token variable">${gogcflags}</span> -N -l&quot;</span>
+<span class="token keyword">fi</span>
+
+<span class="token assign-left variable">goldflags</span><span class="token operator">=</span><span class="token string">&quot;all=<span class="token variable"><span class="token variable">$(</span>kube::version::ldflags<span class="token variable">)</span></span> <span class="token variable">${GOLDFLAGS<span class="token operator">:-</span>}</span>&quot;</span>
+<span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token string">&quot;<span class="token variable">${DBG<span class="token operator">:-</span>}</span>&quot;</span> <span class="token operator">!=</span> <span class="token number">1</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token comment"># Not debugging - disable symbols and DWARF.</span>
+    <span class="token assign-left variable">goldflags</span><span class="token operator">=</span><span class="token string">&quot;<span class="token variable">${goldflags}</span> -s -w&quot;</span>
+<span class="token keyword">fi</span>
+</code></pre></div><p>替换为</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token assign-left variable">gogcflags</span><span class="token operator">=</span><span class="token string">&quot;all=-trimpath=<span class="token variable">${trimroot}</span> <span class="token variable">${GOGCFLAGS<span class="token operator">:-</span>}</span>&quot;</span>
+<span class="token comment"># if [[ &quot;${DBG:-}&quot; == 1 ]]; then</span>
+<span class="token comment">#     # Debugging - disable optimizations and inlining.</span>
+<span class="token comment">#     gogcflags=&quot;${gogcflags} -N -l&quot;</span>
+<span class="token comment"># fi</span>
+<span class="token assign-left variable">gogcflags</span><span class="token operator">=</span><span class="token string">&quot;<span class="token variable">${gogcflags}</span> -N -l&quot;</span>
+<span class="token assign-left variable">goldflags</span><span class="token operator">=</span><span class="token string">&quot;all=<span class="token variable"><span class="token variable">$(</span>kube::version::ldflags<span class="token variable">)</span></span> <span class="token variable">${GOLDFLAGS<span class="token operator">:-</span>}</span>&quot;</span>
+<span class="token comment"># if [[ &quot;${DBG:-}&quot; != 1 ]]; then</span>
+<span class="token comment">#     # Not debugging - disable symbols and DWARF.</span>
+<span class="token comment">#     goldflags=&quot;${goldflags} -s -w&quot;</span>
+<span class="token comment"># fi</span>
+</code></pre></div><h3 id="_2-安装-dlv"><a href="#_2-安装-dlv" class="header-anchor">#</a> 2. 安装 <a href="https://github.com/go-delve/delve" target="_blank" rel="noopener noreferrer">dlv<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></h3> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">git</span> clone https://github.com/go-delve/delve
+<span class="token builtin class-name">cd</span> delve
+go <span class="token function">install</span> github.com/go-delve/delve/cmd/dlv
+</code></pre></div><div class="custom-block tip"><p class="custom-block-title">注</p> <p>这里我使用了 vscode go Tools 提供的套件</p></div> <h3 id="_3-调试-均支持远程调试-api-server"><a href="#_3-调试-均支持远程调试-api-server" class="header-anchor">#</a> 3. 调试（均支持远程调试）（api-server）</h3> <h4 id="_0-调试环境准备"><a href="#_0-调试环境准备" class="header-anchor">#</a> 0. 调试环境准备</h4> <h5 id="_1-获取启动参数"><a href="#_1-获取启动参数" class="header-anchor">#</a> 1. 获取启动参数</h5> <p><u>后面 dlv 需要这些参数</u></p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">ps</span> <span class="token parameter variable">-ef</span> <span class="token operator">|</span> <span class="token function">grep</span>  kube-apiserver
+
+/home/xing/go/src/k8s.io/kubernetes/_output/local/bin/linux/amd64/kube-apiserver --authorization-mode<span class="token operator">=</span>Node,RBAC  --cloud-provider<span class="token operator">=</span> --cloud-config<span class="token operator">=</span>   <span class="token parameter variable">--v</span><span class="token operator">=</span><span class="token number">3</span> <span class="token parameter variable">--vmodule</span><span class="token operator">=</span> --audit-policy-file<span class="token operator">=</span>/tmp/kube-audit-policy-file --audit-log-path<span class="token operator">=</span>/tmp/kube-apiserver-audit.log --authorization-webhook-config-file<span class="token operator">=</span> --authentication-token-webhook-config-file<span class="token operator">=</span> --cert-dir<span class="token operator">=</span>/var/run/kubernetes --egress-selector-config-file<span class="token operator">=</span>/tmp/kube_egress_selector_configuration.yaml --client-ca-file<span class="token operator">=</span>/var/run/kubernetes/client-ca.crt --kubelet-client-certificate<span class="token operator">=</span>/var/run/kubernetes/client-kube-apiserver.crt --kubelet-client-key<span class="token operator">=</span>/var/run/kubernetes/client-kube-apiserver.key --service-account-key-file<span class="token operator">=</span>/tmp/kube-serviceaccount.key --service-account-lookup<span class="token operator">=</span>true --service-account-issuer<span class="token operator">=</span>https://kubernetes.default.svc --service-account-jwks-uri<span class="token operator">=</span>https://kubernetes.default.svc/openid/v1/jwks --service-account-signing-key-file<span class="token operator">=</span>/tmp/kube-serviceaccount.key --enable-admission-plugins<span class="token operator">=</span>NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,Priority,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota,NodeRestriction --disable-admission-plugins<span class="token operator">=</span> --admission-control-config-file<span class="token operator">=</span> --bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0 --secure-port<span class="token operator">=</span><span class="token number">6443</span> --tls-cert-file<span class="token operator">=</span>/var/run/kubernetes/serving-kube-apiserver.crt --tls-private-key-file<span class="token operator">=</span>/var/run/kubernetes/serving-kube-apiserver.key --storage-backend<span class="token operator">=</span>etcd3 --storage-media-type<span class="token operator">=</span>application/vnd.kubernetes.protobuf --etcd-servers<span class="token operator">=</span>http://127.0.0.1:2379 --service-cluster-ip-range<span class="token operator">=</span><span class="token number">10.0</span>.0.0/24 --feature-gates<span class="token operator">=</span>AllAlpha<span class="token operator">=</span>false --external-hostname<span class="token operator">=</span>localhost --requestheader-username-headers<span class="token operator">=</span>X-Remote-User --requestheader-group-headers<span class="token operator">=</span>X-Remote-Group --requestheader-extra-headers-prefix<span class="token operator">=</span>X-Remote-Extra- --requestheader-client-ca-file<span class="token operator">=</span>/var/run/kubernetes/request-header-ca.crt --requestheader-allowed-names<span class="token operator">=</span>system:auth-proxy --proxy-client-cert-file<span class="token operator">=</span>/var/run/kubernetes/client-auth-proxy.crt --proxy-client-key-file<span class="token operator">=</span>/var/run/kubernetes/client-auth-proxy.key --cors-allowed-origins<span class="token operator">=</span><span class="token string">&quot;/127.0.0.1(:[0-9]+)?$,/localhost(:[0-9]+)?$&quot;</span>
+</code></pre></div><h5 id="_2-杀掉-kube-apiserver"><a href="#_2-杀掉-kube-apiserver" class="header-anchor">#</a> 2. 杀掉 <code>kube-apiserver</code></h5> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">kill</span> <span class="token parameter variable">-9</span> <span class="token number">378253</span> <span class="token comment"># 这里替换你的 kube-apiserver pid</span>
+
+<span class="token comment"># 这时候集群会报警告信息出来</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> Outputs:
+W1201 <span class="token number">18</span>:13:25<span class="token punctuation">]</span>: API server terminated unexpectedly, see /tmp/kube-apiserver.log
+</code></pre></div><h4 id="_1-利用-vscode-进行代码调试"><a href="#_1-利用-vscode-进行代码调试" class="header-anchor">#</a> 1. 利用 <code>vscode</code> 进行代码调试</h4> <h5 id="_1-以-dlv-方式启动-kube-apiserver"><a href="#_1-以-dlv-方式启动-kube-apiserver" class="header-anchor">#</a> 1. 以 dlv 方式启动 kube-apiserver</h5> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">sudo</span> dlv <span class="token parameter variable">--headless</span> <span class="token builtin class-name">exec</span> /home/xing/go/src/k8s.io/kubernetes/_output/local/bin/linux/amd64/kube-apiserver   --api-version<span class="token operator">=</span><span class="token number">2</span> --only-same-user<span class="token operator">=</span>false  -- --authorization-mode<span class="token operator">=</span>Node,RBAC  --cloud-provider<span class="token operator">=</span> --cloud-config<span class="token operator">=</span>   <span class="token parameter variable">--v</span><span class="token operator">=</span><span class="token number">3</span> <span class="token parameter variable">--vmodule</span><span class="token operator">=</span> --audit-policy-file<span class="token operator">=</span>/tmp/kube-audit-policy-file --audit-log-path<span class="token operator">=</span>/tmp/kube-apiserver-audit.log --authorization-webhook-config-file<span class="token operator">=</span> --authentication-token-webhook-config-file<span class="token operator">=</span> --cert-dir<span class="token operator">=</span>/var/run/kubernetes --egress-selector-config-file<span class="token operator">=</span>/tmp/kube_egress_selector_configuration.yaml --client-ca-file<span class="token operator">=</span>/var/run/kubernetes/client-ca.crt --kubelet-client-certificate<span class="token operator">=</span>/var/run/kubernetes/client-kube-apiserver.crt --kubelet-client-key<span class="token operator">=</span>/var/run/kubernetes/client-kube-apiserver.key --service-account-key-file<span class="token operator">=</span>/tmp/kube-serviceaccount.key --service-account-lookup<span class="token operator">=</span>true --service-account-issuer<span class="token operator">=</span>https://kubernetes.default.svc --service-account-jwks-uri<span class="token operator">=</span>https://kubernetes.default.svc/openid/v1/jwks --service-account-signing-key-file<span class="token operator">=</span>/tmp/kube-serviceaccount.key --enable-admission-plugins<span class="token operator">=</span>NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,Priority,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota,NodeRestriction --disable-admission-plugins<span class="token operator">=</span> --admission-control-config-file<span class="token operator">=</span> --bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0 --secure-port<span class="token operator">=</span><span class="token number">6443</span> --tls-cert-file<span class="token operator">=</span>/var/run/kubernetes/serving-kube-apiserver.crt --tls-private-key-file<span class="token operator">=</span>/var/run/kubernetes/serving-kube-apiserver.key --storage-backend<span class="token operator">=</span>etcd3 --storage-media-type<span class="token operator">=</span>application/vnd.kubernetes.protobuf --etcd-servers<span class="token operator">=</span>http://127.0.0.1:2379 --service-cluster-ip-range<span class="token operator">=</span><span class="token number">10.0</span>.0.0/24 --feature-gates<span class="token operator">=</span>AllAlpha<span class="token operator">=</span>false --external-hostname<span class="token operator">=</span>localhost --requestheader-username-headers<span class="token operator">=</span>X-Remote-User --requestheader-group-headers<span class="token operator">=</span>X-Remote-Group --requestheader-extra-headers-prefix<span class="token operator">=</span>X-Remote-Extra- --requestheader-client-ca-file<span class="token operator">=</span>/var/run/kubernetes/request-header-ca.crt --requestheader-allowed-names<span class="token operator">=</span>system:auth-proxy --proxy-client-cert-file<span class="token operator">=</span>/var/run/kubernetes/client-auth-proxy.crt --proxy-client-key-file<span class="token operator">=</span>/var/run/kubernetes/client-auth-proxy.key --cors-allowed-origins<span class="token operator">=</span><span class="token string">&quot;/127.0.0.1(:[0-9]+)?$,/localhost(:[0-9]+)?$&quot;</span>
+
+
+<span class="token comment"># 注：如果指定了 --listen 就是你指定的 如果没有指定则随机生成一个端口 这里我是随机生成</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> Outputs:
+API server listening at: <span class="token number">127.0</span>.0.1:43605
+
+</code></pre></div><h5 id="_2-生成配置文件-不会百度或者复制下面即可"><a href="#_2-生成配置文件-不会百度或者复制下面即可" class="header-anchor">#</a> 2. 生成配置文件（不会百度或者复制下面即可）</h5> <p>用 <code>vscode</code> 打开源码</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token comment">// .vscode/launch.json</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 使用 IntelliSense 了解相关属性。</span>
+    <span class="token comment">// 悬停以查看现有属性的描述。</span>
+    <span class="token comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span>
+    <span class="token property">&quot;version&quot;</span><span class="token operator">:</span> <span class="token string">&quot;0.2.0&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;configurations&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Connect to server&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;go&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;request&quot;</span><span class="token operator">:</span> <span class="token string">&quot;attach&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;mode&quot;</span><span class="token operator">:</span> <span class="token string">&quot;remote&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;remotePath&quot;</span><span class="token operator">:</span> <span class="token string">&quot;${workspaceFolder}&quot;</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;port&quot;</span><span class="token operator">:</span> <span class="token number">2345</span><span class="token punctuation">,</span>
+            <span class="token property">&quot;host&quot;</span><span class="token operator">:</span> <span class="token string">&quot;127.0.0.1&quot;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h5 id="_3-开始调试"><a href="#_3-开始调试" class="header-anchor">#</a> 3. 开始调试</h5> <p><img alt="image" data-src="https://cdn.staticaly.com/gh/brook-w/image-hosting@master/k8s/image.4bbosnktb9m0.webp" loading="lazy" class="lazy"></p> <p><em>F5 执行</em></p> <h5 id="_4-成功执行调试"><a href="#_4-成功执行调试" class="header-anchor">#</a> 4. 成功执行调试：</h5> <p><img alt="image" data-src="https://cdn.staticaly.com/gh/brook-w/image-hosting@master/k8s/image.384sqabnry80.webp" loading="lazy" class="lazy"></p> <h4 id="_2-利用-goland-进行代码调试"><a href="#_2-利用-goland-进行代码调试" class="header-anchor">#</a> 2. 利用 <code>Goland</code> 进行代码调试</h4> <h4 id="_3-利用-命令行-进行代码调试"><a href="#_3-利用-命令行-进行代码调试" class="header-anchor">#</a> 3. 利用 <code>命令行</code> 进行代码调试</h4> <h5 id="_1-以-dlv-方式启动-kube-apiserver-2"><a href="#_1-以-dlv-方式启动-kube-apiserver-2" class="header-anchor">#</a> 1. 以 dlv 方式启动 kube-apiserver</h5> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">sudo</span> dlv <span class="token parameter variable">--headless</span> <span class="token builtin class-name">exec</span> /home/xing/go/src/k8s.io/kubernetes/_output/local/bin/linux/amd64/kube-apiserver   --api-version<span class="token operator">=</span><span class="token number">2</span>  -- --authorization-mode<span class="token operator">=</span>Node,RBAC  --cloud-provider<span class="token operator">=</span> --cloud-config<span class="token operator">=</span>   <span class="token parameter variable">--v</span><span class="token operator">=</span><span class="token number">3</span> <span class="token parameter variable">--vmodule</span><span class="token operator">=</span> --audit-policy-file<span class="token operator">=</span>/tmp/kube-audit-policy-file --audit-log-path<span class="token operator">=</span>/tmp/kube-apiserver-audit.log --authorization-webhook-config-file<span class="token operator">=</span> --authentication-token-webhook-config-file<span class="token operator">=</span> --cert-dir<span class="token operator">=</span>/var/run/kubernetes --egress-selector-config-file<span class="token operator">=</span>/tmp/kube_egress_selector_configuration.yaml --client-ca-file<span class="token operator">=</span>/var/run/kubernetes/client-ca.crt --kubelet-client-certificate<span class="token operator">=</span>/var/run/kubernetes/client-kube-apiserver.crt --kubelet-client-key<span class="token operator">=</span>/var/run/kubernetes/client-kube-apiserver.key --service-account-key-file<span class="token operator">=</span>/tmp/kube-serviceaccount.key --service-account-lookup<span class="token operator">=</span>true --service-account-issuer<span class="token operator">=</span>https://kubernetes.default.svc --service-account-jwks-uri<span class="token operator">=</span>https://kubernetes.default.svc/openid/v1/jwks --service-account-signing-key-file<span class="token operator">=</span>/tmp/kube-serviceaccount.key --enable-admission-plugins<span class="token operator">=</span>NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,Priority,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota,NodeRestriction --disable-admission-plugins<span class="token operator">=</span> --admission-control-config-file<span class="token operator">=</span> --bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0 --secure-port<span class="token operator">=</span><span class="token number">6443</span> --tls-cert-file<span class="token operator">=</span>/var/run/kubernetes/serving-kube-apiserver.crt --tls-private-key-file<span class="token operator">=</span>/var/run/kubernetes/serving-kube-apiserver.key --storage-backend<span class="token operator">=</span>etcd3 --storage-media-type<span class="token operator">=</span>application/vnd.kubernetes.protobuf --etcd-servers<span class="token operator">=</span>http://127.0.0.1:2379 --service-cluster-ip-range<span class="token operator">=</span><span class="token number">10.0</span>.0.0/24 --feature-gates<span class="token operator">=</span>AllAlpha<span class="token operator">=</span>false --external-hostname<span class="token operator">=</span>localhost --requestheader-username-headers<span class="token operator">=</span>X-Remote-User --requestheader-group-headers<span class="token operator">=</span>X-Remote-Group --requestheader-extra-headers-prefix<span class="token operator">=</span>X-Remote-Extra- --requestheader-client-ca-file<span class="token operator">=</span>/var/run/kubernetes/request-header-ca.crt --requestheader-allowed-names<span class="token operator">=</span>system:auth-proxy --proxy-client-cert-file<span class="token operator">=</span>/var/run/kubernetes/client-auth-proxy.crt --proxy-client-key-file<span class="token operator">=</span>/var/run/kubernetes/client-auth-proxy.key --cors-allowed-origins<span class="token operator">=</span><span class="token string">&quot;/127.0.0.1(:[0-9]+)?$,/localhost(:[0-9]+)?$&quot;</span>
+
+
+<span class="token comment"># 注：如果指定了 --listen 就是你指定的 如果没有指定则随机生成一个端口 这里我是随机生成</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> Outputs:
+API server listening at: <span class="token number">127.0</span>.0.1:43605
+
+</code></pre></div><h5 id="_2-连接-dlv-connect"><a href="#_2-连接-dlv-connect" class="header-anchor">#</a> 2. 连接 dlv connect</h5> <div class="language-sh extra-class"><pre class="language-sh"><code>dlv connect localhost:43605
+
+<span class="token comment"># 在这里就可以调试了</span>
+<span class="token comment"># 打断点</span>
+<span class="token builtin class-name">break</span> cmd/kube-apiserver/apiserver.go:33
+
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> Outputs:
+Breakpoint <span class="token number">1</span> <span class="token builtin class-name">set</span> at 0x5233854 <span class="token keyword">for</span> main.main<span class="token punctuation">(</span><span class="token punctuation">)</span> cmd/kube-apiserver/apiserver.go:33
+
+<span class="token builtin class-name">continue</span>
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> Outputs:
+<span class="token operator">&gt;</span> main.main<span class="token punctuation">(</span><span class="token punctuation">)</span> cmd/kube-apiserver/apiserver.go:33 <span class="token punctuation">(</span>hits goroutine<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>:1 total:1<span class="token punctuation">)</span> <span class="token punctuation">(</span>PC: 0x5233854<span class="token punctuation">)</span>
+    <span class="token number">28</span>:         _ <span class="token string">&quot;k8s.io/component-base/metrics/prometheus/version&quot;</span>  // <span class="token keyword">for</span> version metric registration
+    <span class="token number">29</span>:         <span class="token string">&quot;k8s.io/kubernetes/cmd/kube-apiserver/app&quot;</span>
+    <span class="token number">30</span>: <span class="token punctuation">)</span>
+    <span class="token number">31</span>:
+    <span class="token number">32</span>: func <span class="token function-name function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token operator">=</span><span class="token operator">&gt;</span>  <span class="token number">33</span>:         <span class="token builtin class-name">command</span> :<span class="token operator">=</span> app.NewAPIServerCommand<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token number">34</span>:         code :<span class="token operator">=</span> cli.Run<span class="token punctuation">(</span>command<span class="token punctuation">)</span>
+    <span class="token number">35</span>:         os.Exit<span class="token punctuation">(</span>code<span class="token punctuation">)</span>
+    <span class="token number">36</span>: <span class="token punctuation">}</span>
+</code></pre></div><p>进行愉快的命令行调试就可以了</p> <h4 id="_4-调试过程中注意事项"><a href="#_4-调试过程中注意事项" class="header-anchor">#</a> 4. 调试过程中注意事项</h4> <h5 id="_1-dlv"><a href="#_1-dlv" class="header-anchor">#</a> 1. dlv</h5> <p>在 dlv 启动参数一定要加 <code>--only-same-user=false</code> 参数选项，否则会出现如下警告，导致远程或本地无法调试</p> <div class="language-sh extra-class"><pre class="language-sh"><code>closing connection from different user <span class="token punctuation">(</span><span class="token number">127.0</span>.0.1:34980<span class="token punctuation">)</span>: connections to localhost are only accepted from the same UNIX user <span class="token keyword">for</span> security reasons
+</code></pre></div><p>大致意思就是仅允许当前启动 dlv app 的用户操作 debug，包括 <code>sudo</code> 指令在内</p> <p><a href="https://github.com/golang/vscode-go/issues/810" target="_blank" rel="noopener noreferrer">https://github.com/golang/vscode-go/issues/810<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h5 id="_2-kube-apiserver-参数"><a href="#_2-kube-apiserver-参数" class="header-anchor">#</a> 2. kube-apiserver 参数</h5> <p><code>--cors-allowed-origins=&quot;/127.0.0.1(:[0-9]+)?$,/localhost(:[0-9]+)?$&quot;</code> 参数选项使用了正则表达式，在此处要用 <code>&quot;&quot;</code> 包裹，否则会出现 bash 语法解析错误，无法识别 <code>(</code> 之类的语法</p></div></div>  <div class="page-edit"><!----> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2022/12/06, 12:26:17</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/pages/b99bda/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">（一）环境搭建</div></a> <a href="/pages/f9a6c6/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">（三）API Server源码剖析</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/pages/b99bda/" class="prev">（一）环境搭建</a></span> <span class="next"><a href="/pages/f9a6c6/">（三）API Server源码剖析</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/pages/0214d2/"><div>
+            （四）Generic Server
+            <!----></div></a> <span class="date">12-05</span></dt></dl><dl><dd>02</dd> <dt><a href="/pages/f9a6c6/"><div>
+            （三）API Server源码剖析
+            <!----></div></a> <span class="date">12-02</span></dt></dl><dl><dd>03</dd> <dt><a href="/pages/b99bda/"><div>
+            （一）环境搭建
+            <!----></div></a> <span class="date">12-01</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2019-2022
+    <span>Brook-w | <a href="https://github.com/brook-w/blogs/blob/master/LICENSE" target="_blank">GPL License</a></span> <div><a href="https://beian.miit.gov.cn/" target="_blank">
+      京ICP备2020045721号-2
+    </a></div></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <div class="body-bg" style="background:url() center center / cover no-repeat;opacity:0.5;"></div> <!----> <!----></div><div class="global-ui"></div></div>
+  <script src="/assets/js/app.e34e77c9.js" defer></script><script src="/assets/js/2.60a89b72.js" defer></script><script src="/assets/js/3.d91ac3a8.js" defer></script><script src="/assets/js/9.48e3b464.js" defer></script>
+
+</body>
+
+</html>
