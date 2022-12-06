@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ title }}</title>
+  <meta name="generator" content="VuePress {{ version }}">
+
+  <script src="/assets/js/xmind-embed-viewer.js"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.js"></script>
+  <script type="text/javascript" src="/assets/js/markdown-it-drawio-viewer.js"></script>
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.4.0/jquery.js"></script>
+
+
+  {{{ userHeadTags }}}
+  {{{ pageMeta }}}
+  {{{ canonicalLink }}}
+  {{{ renderResourceHints() }}}
+  {{{ renderStyles() }}}
+
+</head>
+
+<body class="theme-mode-light">
+  <!--vue-ssr-outlet-->
+  {{{ renderScripts() }}}
+
+</body>
+
+</html>
