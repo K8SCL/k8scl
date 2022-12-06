@@ -30,6 +30,12 @@ jobs:
           git config --local user.email "1285837374@qq.com"
           git config --local user.name "github-actions[bot]"
           git branch
+          date > generated.txt
+          ls -al
+          git add .
+          git commit -m "generated"
+          git push -f
+
           # git checkout -b gh-pages origin/gh-pages
           # git branch
           ls -al
