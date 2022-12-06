@@ -28,8 +28,7 @@ jobs:
           cache: "npm"
       - run: npm install -g yarn
       - run: yarn && yarn build
-      - run: mv ./docs/.vuepress/dist /home/${USER}/dist/ && cd /home/${USER}/dist/ && ls -al
-
+      - run: mv ./docs/.vuepress/dist /home/${USER}/dist/
       - name: checkout gh-pages
         uses: actions/checkout@v2.5.0
         with:
@@ -42,8 +41,7 @@ jobs:
           rm -rf *
           git commit -a -m "remove all files"
 
-          mv /home/${USER}/dist ./
+          mv /home/${USER}/dist/* .
           git add .
           git commit -a -m "deploy file by github-actions[bot]"
           git push -f
-      - run: echo "Deploy Success"
