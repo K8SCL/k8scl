@@ -29,18 +29,14 @@ jobs:
       - run: npm install -g yarn
       - run: yarn && yarn build
       - run: mv ./docs/.vuepress/dist /home/${USER}/dist/ && cd /home/${USER}/dist/ && ls -al
-
-      # - run: |
-      #     cd ./dist
-      #     pwd
-      #     ls -al
-      # - name: Commit files
-      #   run: |
-      #     git config --local user.email "1285837374@qq.com"
-      #     git config --local user.name "github-actions[bot]"
-      #     git commit -a -m "Add changes"
-      # - name: Deploy to gh-pages branch
-      #   uses: ad-m/github-push-action@v0.6.0
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     branch: "gh-pages"
+      - name: Commit files
+        run: |
+          git config --local user.email "1285837374@qq.com"
+          git config --local user.name "github-actions[bot]"
+          git checkout -b gh-pages
+          rm -rf *
+          git commit -a -m "remove all files"
+          mv /home/${USER}/dist ./
+          git commit -a -m "fill deploy files"
+          git push -f
+      - run: echo "Deploy Success"
