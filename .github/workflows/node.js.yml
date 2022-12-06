@@ -33,10 +33,15 @@ jobs:
         run: |
           git config --local user.email "1285837374@qq.com"
           git config --local user.name "github-actions[bot]"
-          git checkout -b gh-pages
+          git checkout -q --track origin/gh-pages
+          echo "current dir:"
+          ls -al
           rm -rf *
           git commit -a -m "remove all files"
           mv /home/${USER}/dist ./
+          echo "current dir:"
+          ls -al
+          rm -rf *
           git commit -a -m "fill deploy files"
           git push -f
       - run: echo "Deploy Success"
