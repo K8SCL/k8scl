@@ -31,5 +31,8 @@
   "dependencies": {
     "eventing-bus": "^2.0.1",
     "file-saver": "^2.0.5"
+  },
+  "engines": {
+    "node": ">=16 <18"
   }
 }
