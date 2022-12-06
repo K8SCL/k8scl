@@ -28,10 +28,8 @@ jobs:
           cache: "npm"
       - run: npm install -g yarn
       - run: yarn && yarn build
-      - run: |
-          echo "current dir:"
-          cd docs/.vuepress
-          ls -al
+      - run: mv ./docs/.vuepress/dist /home/${USER}/dist/ && cd /home/${USER}/dist/ && ls -al
+
       # - run: |
       #     cd ./dist
       #     pwd
