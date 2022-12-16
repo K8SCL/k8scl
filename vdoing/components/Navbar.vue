@@ -3,38 +3,24 @@
     <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')" />
 
     <router-link :to="$localePath" class="home-link">
-      <img
-        class="logo"
-        v-if="$site.themeConfig.logo"
-        :src="$withBase($site.themeConfig.logo)"
-        :alt="$siteTitle"
-      />
-      <span
-        ref="siteName"
-        class="site-name"
-        v-if="$siteTitle"
-        :class="{ 'can-hide': $site.themeConfig.logo }"
-        >{{ $siteTitle }}</span
-      >
+      <img class="logo" v-if="$site.themeConfig.logo" :src="$withBase($site.themeConfig.logo)" :alt="$siteTitle" />
+      <span ref="siteName" class="site-name" v-if="$siteTitle" :class="{ 'can-hide': $site.themeConfig.logo }">{{
+          $siteTitle
+      }}</span>
     </router-link>
 
-    <div
-      class="links"
-      :style="
-        linksWrapMaxWidth
-          ? {
-              'max-width': linksWrapMaxWidth + 'px',
-            }
-          : {}
-      "
-    >
+    <div class="links" :style="
+      linksWrapMaxWidth
+        ? {
+          'max-width': linksWrapMaxWidth + 'px',
+        }
+        : {}
+    ">
       <AlgoliaSearchBox v-if="isAlgoliaSearch" :options="algolia" />
-      <SearchBox
-        v-else-if="
-          $site.themeConfig.search !== false &&
-          $page.frontmatter.search !== false
-        "
-      />
+      <SearchBox v-else-if="
+  $site.themeConfig.search !== false &&
+  $page.frontmatter.search !== false
+      " />
       <NavLinks class="can-hide" />
     </div>
   </header>
@@ -100,7 +86,7 @@ $navbar-vertical-padding = 0.7rem;
 $navbar-horizontal-padding = 1.5rem;
 
 .navbar {
-  padding: $navbar-vertical-padding $navbar-horizontal-padding;
+  padding: $navbar-horizontal-padding - 1rem;
   line-height: $navbarHeight - 1.4rem;
   transition: transform 0.3s;
 
@@ -109,9 +95,8 @@ $navbar-horizontal-padding = 1.5rem;
   }
 
   .logo {
-    height: $navbarHeight - 2.5rem;
-    min-width: $navbarHeight - 1.3rem;
-    margin-top: 0.6rem;
+    height: $navbarHeight - 1rem;
+    min-width: $navbarHeight - 1.5rem;
     margin-right: 0.5rem;
     vertical-align: top;
   }
