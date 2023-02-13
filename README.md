@@ -23,14 +23,29 @@ Kubernetes 也称为 K8s，是用于自动部署、扩缩和管理容器化应�
 ![image](https://cdn.staticaly.com/gh/k8scl/k8scl@master/assets/image/kubernetes.png)
 
 
-
 # 关于项目
 
 本项目成立的初衷是为了让国内小伙伴想学习，对 K8S 感兴趣，以及对其由扩展需求或者定制化需求推出的中文化简单总结，对于英语基础好的同学还是建议阅读国外原汁原味的文献比较好，也可以简单了解下此项目
 
+
+## 项目特点
+
+此项目可以直接支持以及渲染以下方式的图标和文本信息
+
+- markdown(默认支持)
+    > ![image](https://cdn.staticaly.com/gh/k8scl/k8scl@master/assets/image/md-render.png)
+- drawio
+    > ![image](https://cdn.staticaly.com/gh/k8scl/k8scl@master/assets/image/drawio-render.png)
+- xmind
+- mermaidjs
+
+其他内容可以自行探索
+
 ## 构建
 
 将本项目构建至本地只需要简单的 Web 知识即可
+
+- nodejs >=16
 
 ### 二次开发（发行）
 
@@ -50,6 +65,10 @@ yarn build
 
 ## 贡献
 
+对于此项目如果想要贡献或者共同参与项目，我们对成员没有要求，只要你对开源、Kubernetes 感兴趣即可
+
+- 成为项目（社区）成员
+- 提出 ISSUES
 
 ## 协议
 GPL-3.0 license
