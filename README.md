@@ -1,26 +1,22 @@
 # [关于 Kubernetes](https://kubernetes.io/zh-cn/)
 
-首先我们需要知道什么是 Kubernetes，以及它能干什么？
+##  Kubernetes 是什么？
 
-生产级别的容器编排系统
+<u><b>生产级别的容器编排系统</b></u>
 
-Kubernetes 也称为 K8s，是用于自动部署、扩缩和管理容器化应用程序的开源系统。
->
->    它将组成应用程序的容器组合成逻辑单元，以便于管理和服务发现。Kubernetes 源自Google 15 年生产环境的运维经验，同时凝聚了社区的最佳创意和实践。
-
+> Kubernetes 也称为 K8s，是用于自动部署、扩缩和管理容器化应用程序的开源系统。
+>>  它将组成应用程序的容器组合成逻辑单元，以便于管理和服务发现。Kubernetes 源自Google 15 年生产环境的运维经验
 
 - 星际尺度
-> Google 每周运行数十亿个容器，Kubernetes 基于与之相同的原则来设计，能够在不扩张运维团队的情况下进行规模扩展。
-
+    > Google 每周运行数十亿个容器，Kubernetes 基于与之相同的原则来设计，能够在不扩张运维团队的情况下进行规模扩展。
 
 - 处处适用
-> 无论是本地测试，还是跨国公司，Kubernetes 的灵活性都能让你在应对复杂系统时得心应手。
-
+    > 无论是本地测试，还是跨国公司，Kubernetes 的灵活性都能让你在应对复杂系统时得心应手。
 
 - 永不过时
-> Kubernetes 是开源系统，可以自由地部署在企业内部，私有云、混合云或公有云，让您轻松地做出合适的选择。
+    > Kubernetes 是开源系统，可以自由地部署在企业内部，私有云、混合云或公有云，让您轻松地做出合适的选择。
 
-![image](https://cdn.staticaly.com/gh/k8scl/k8scl@master/assets/image/kubernetes.png)
+    ![image](https://cdn.staticaly.com/gh/k8scl/k8scl@master/assets/image/kubernetes.png)
 
 
 # 关于项目
