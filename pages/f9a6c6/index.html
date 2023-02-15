@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>K8SCL</title>
+  <meta name="generator" content="VuePress 1.9.5">
+
+  <!-- CDN 出错 -->
+  <script src="/assets/js/xmind-embed-viewer.js"></script>
+  <script type="text/javascript" src="/assets/js/markdown-it/8.4.2/markdown-it.js"></script>
+  <script type="text/javascript" src="/assets/js/markdown-it-drawio-viewer.js"></script>
+  <script type="text/javascript" src="/assets/js/jquery/3.4.0/jquery.js"></script>
+
+
+  <link rel="icon" href="/favicon.ico">
+  <meta name="description" content="K8s 源码学习、二次开发、自定义组件开发">
+    <meta name="keywords" content="技术文档,kubernetes,k8s,go,golang">
+    <meta name="theme-color" content="#11a8cd">
+  
+  <link rel="preload" href="/assets/css/0.styles.93d7d86c.css" as="style"><link rel="preload" href="/assets/js/app.4abec194.js" as="script"><link rel="preload" href="/assets/js/2.7bb6bd59.js" as="script"><link rel="preload" href="/assets/js/3.d91ac3a8.js" as="script"><link rel="preload" href="/assets/js/11.969be0b0.js" as="script"><link rel="prefetch" href="/assets/js/10.4c4bc014.js"><link rel="prefetch" href="/assets/js/12.645254c7.js"><link rel="prefetch" href="/assets/js/13.e33ab6ca.js"><link rel="prefetch" href="/assets/js/14.f2fe010f.js"><link rel="prefetch" href="/assets/js/15.945e1edf.js"><link rel="prefetch" href="/assets/js/16.acdb0e08.js"><link rel="prefetch" href="/assets/js/17.ef286641.js"><link rel="prefetch" href="/assets/js/18.5e5fe87b.js"><link rel="prefetch" href="/assets/js/19.03331e5a.js"><link rel="prefetch" href="/assets/js/20.be43cd27.js"><link rel="prefetch" href="/assets/js/21.daf279f1.js"><link rel="prefetch" href="/assets/js/22.160a1eff.js"><link rel="prefetch" href="/assets/js/23.390acc59.js"><link rel="prefetch" href="/assets/js/24.7c28767c.js"><link rel="prefetch" href="/assets/js/4.d266ff45.js"><link rel="prefetch" href="/assets/js/5.69a191cc.js"><link rel="prefetch" href="/assets/js/6.2b730f2b.js"><link rel="prefetch" href="/assets/js/7.cfe31641.js"><link rel="prefetch" href="/assets/js/8.57f670b9.js"><link rel="prefetch" href="/assets/js/9.03ae970c.js">
+  <link rel="stylesheet" href="/assets/css/0.styles.93d7d86c.css">
+
+</head>
+
+<body class="theme-mode-light">
+  <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu have-body-img"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="" class="logo"> <!----></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/pages/b99bda/" class="nav-link">Kubernetes 源码开发之旅</a></div> <a href="https://github.com/k8scl/k8scl" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/logo.png"> <div class="blogger-info"><h3>brook-w</h3> <span>K8s 源码学习、二次开发、自定义组件开发</span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/pages/b99bda/" class="nav-link">Kubernetes 源码开发之旅</a></div> <a href="https://github.com/k8scl/k8scl" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/pages/b99bda/" class="sidebar-link">（一）环境搭建</a></li><li><a href="/pages/21e760/" class="sidebar-link">（二）编译运行并调试源码</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>（三）API Server 源码刨析</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/pages/f9a6c6/" aria-current="page" class="active sidebar-link">1. API Server 源码简介</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level2"><a href="/pages/f9a6c6/#视频地址" class="sidebar-link">视频地址</a></li><li class="sidebar-sub-header level2"><a href="/pages/f9a6c6/#准备工作" class="sidebar-link">准备工作</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/pages/f9a6c6/#目录梳理" class="sidebar-link">目录梳理</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/pages/f9a6c6/#api-server-启动过程" class="sidebar-link">API Server 启动过程</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/pages/f9a6c6/#代码预览" class="sidebar-link">代码预览</a></li><li class="sidebar-sub-header level4"><a href="/pages/f9a6c6/#目录结构" class="sidebar-link">目录结构</a></li><li class="sidebar-sub-header level4"><a href="/pages/f9a6c6/#主程序" class="sidebar-link">主程序</a></li><li class="sidebar-sub-header level4"><a href="/pages/f9a6c6/#命令主体" class="sidebar-link">命令主体</a></li><li class="sidebar-sub-header level4"><a href="/pages/f9a6c6/#调用流程" class="sidebar-link">调用流程</a></li><li class="sidebar-sub-header level5"><a href="/pages/f9a6c6/#基本启动流程" class="sidebar-link">基本启动流程</a></li><li class="sidebar-sub-header level5"><a href="/pages/f9a6c6/#rune-启动" class="sidebar-link">RunE 启动</a></li><li class="sidebar-sub-header level5"><a href="/pages/f9a6c6/#master-中装载-api" class="sidebar-link">Master 中装载 API</a></li></ul></li><li class="sidebar-sub-header level2"><a href="/pages/f9a6c6/#scheme-详解" class="sidebar-link">Scheme 详解</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header level3"><a href="/pages/f9a6c6/#构造并填充-scheme" class="sidebar-link">构造并填充 Scheme</a></li><li class="sidebar-sub-header level3"><a href="/pages/f9a6c6/#概念词组" class="sidebar-link">概念词组</a></li><li class="sidebar-sub-header level3"><a href="/pages/f9a6c6/#scheme-作用和应用场景" class="sidebar-link">Scheme 作用和应用场景</a></li><li class="sidebar-sub-header level3"><a href="/pages/f9a6c6/#填充-scheme-代码-internal-version" class="sidebar-link">填充 Scheme 代码 —— Internal Version</a></li><li class="sidebar-sub-header level3"><a href="/pages/f9a6c6/#填充-scheme-代码-external-version" class="sidebar-link">填充 Scheme 代码 —— External Version</a></li><li class="sidebar-sub-header level3"><a href="/pages/f9a6c6/#converter-和-defaulter-的代码生成" class="sidebar-link">Converter 和 Defaulter 的代码生成</a></li></ul></li></ul></li><li><a href="/pages/0214d2/" class="sidebar-link">2. Generic Server</a></li><li><a href="/pages/b3a2f3/" class="sidebar-link">3. Master API Server</a></li><li><a href="/pages/9fc980/" class="sidebar-link">4. Extension API Server</a></li><li><a href="/pages/9157bc/" class="sidebar-link">5. Aggregator Server</a></li><li><a href="/pages/1c76f5/" class="sidebar-link">6. Admission</a></li><li><a href="/pages/c1fc43/" class="sidebar-link">7. Http Req 处理过程和 Default Filters</a></li><li><a href="/pages/1cc02c/" class="sidebar-link">8. 登录与鉴权的实现</a></li></ul></section></li><li><a href="/pages/33da11/" class="sidebar-link">（四）Aggregated API Server 的实现</a></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-deb3a48a><div class="articleInfo" data-v-deb3a48a><ul class="breadcrumbs" data-v-deb3a48a><li data-v-deb3a48a><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-deb3a48a></a></li> <li data-v-deb3a48a><a href="/k8scl/#Kubernetes 源码开发之旅" data-v-deb3a48a>Kubernetes 源码开发之旅</a></li><li data-v-deb3a48a><a href="/k8scl/#（三）API Server 源码刨析" data-v-deb3a48a>（三）API Server 源码刨析</a></li></ul> <div class="info" data-v-deb3a48a><div title="作者" class="author iconfont icon-touxiang" data-v-deb3a48a><a href="https://github.com/brook-w" target="_blank" title="作者" class="beLink" data-v-deb3a48a>brook-w</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-deb3a48a><a href="javascript:;" data-v-deb3a48a>2022-12-02</a></div> <!----> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABGpJREFUSA3tVVtoXFUU3fvOI53UlmCaKIFmwEhsE7QK0ipFEdHEKpXaZGrp15SINsXUWvBDpBgQRKi0+KKoFeJHfZA+ED9KKoIU2gYD9UejTW4rVIzm0VSTziPzuNu1z507dibTTjL4U/DAzLn3nL3X2o91ziX6f9wMFdh6Jvbm9nNSV0msViVO6tN1Rm7NMu2OpeJ9lWBUTDxrJbYTS0hInuwciu9eLHlFxCLCZEk3MegsJmZ5K/JD6t7FkFdEvGUo1g7qJoG3MHImqRIn8/nzY1K9UPKKiJmtnUqHVE3Gbuay6vJE/N2FEmuxFjW2nUuE0yQXRRxLiTUAzs36zhZvOXJPdX850EVnnLZkB8prodQoM5JGj7Xk2mvC7JB8tG04Ef5PiXtG0UtxupRQSfTnBoCy554x18yJHI6I+G5Eru4LHmPJZEQsrvPUbMiA8G/WgMK7w7I+ez7++o2ANfbrjvaOl1tFMs+htG3IrZH9/hDX1Pr8Tc0UvH8tcX29KzAgIGcEkINyW5BF9x891hw6VYqgJHEk0huccS7vh3C6gTiODL+26huuBtbct8eZnqLML8PkxGYpuPZBqtqwkSjgc4mB5gbgig5i+y0UDK35LMxXisn9xQtK+nd26gTIHsHe/oblK/b29fUmN/8Y+9jAQrnBp56m1LcDlDp9irKTExSKduXJVWSqdBMA08pEJnEIOB3FPPMybu/oeV8zFeYN3xx576Q6RH+VmplE4ncQV5v+5rzSoyOU7PuEAg8g803PwBJ0CExno/jcMbN8tONYeOmHiuUNryvm3fRUy4tMPVLdAGkUhNWuggGrJcXPv+ouCjz0MKUHz1J2/E8IC9nqTabcxgaBYM0hPhD5Y65FsbxRQKxCQrDjDctW7PUM3HuZunFyifSAqEfuzCp48Il24luWUWZoyJCaPR82jE0+kFA643wRFVni4RYSq3ohJO2pZ7B5dO4xkDWbEpossJPLSrPjYID8rS2UHTlvyNxqIGsg674XJJ7vnh5L7PNwC4hh2sjCI96mzszOTpxLF0T7l88Yz7lAuK6OnL8gXLOnTvpzSb22YG8W7us3jSebFHeeqnXRG1vt+MoUM84LQIBmMsCTAcOauTh0T0l0neQK7m2bLMt2mGxU3HYssS0J2cdv5wljlPsrIuZLAG/2DOZIXgCYT8uMGZN+e2kSirfxZOPCsC0f24nTZzspnVn9VePS1Z5vubmAGGXG8ZFno9Hel0yfA5ZPhF7Dh972BQJ2qCpgH67lmWtBYbvk6sz02wjky2vXyz0XErP/kFB619js1BtwfOV4OPRqOQBjy3Qbk18vigUPPSD5ceHnwck7W9bhAqZdd7SuG7w4/P2F/GaJh8c7e9qgow+Q7cGBo+98WsLkuktFqiZabtXuQTu/Y5ETbR0v7tNSFnvrmu6pjdoan2KjMu8q/Hmj1EfCO2ZGfEIbIXKUlw8qaX9/b2oeSJmFksSeT/Fn0V3nSypChh4Gjh74ybO9aeZ/AN2dwciu2/MhAAAAAElFTkSuQmCC">1. API Server 源码简介<!----></h1>  <div class="theme-vdoing-content content__default"><h2 id="视频地址"><a href="#视频地址" class="header-anchor">#</a> <a href="https://www.bilibili.com/video/BV13A4y1R7RH?p=1&amp;vd_source=62e2bbc859564f43d9cc06ff317aaa5e" target="_blank" rel="noopener noreferrer">视频地址<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></h2> <h2 id="准备工作"><a href="#准备工作" class="header-anchor">#</a> 准备工作</h2> <ul><li>推荐书籍</li></ul> <p><img alt="image" data-src="https://cdn.staticaly.com/gh/brook-w/image-hosting@master/k8s/image.krjzhoeno9s.webp" loading="lazy" class="lazy"></p> <h3 id="目录梳理"><a href="#目录梳理" class="header-anchor">#</a> 目录梳理</h3> <ul><li><p><code>./cmd/kube-apiserver</code></p> <blockquote><p>API Server 可执行程序的主入口，基于 cobra，主要负责接受命令行参数，也是代码学习的入口</p></blockquote></li> <li><p><code>./vendor/k8s.io</code> 和 <code>./staging/src/k8s.io</code></p> <blockquote><p>vendor 机制是老一代版本依赖管理机制，module 是新一代。不过 vendor 目录存在还是会被优先使用；staging 中包含正在被单独抽离的组件，软引用到 vendor 下</p></blockquote></li> <li><p><code>./pkg</code></p> <blockquote><p>大部分源码所在地，除了被抽离为单独组件的部分，例如 api-server 的代码，proxy 相关的代码，kubelet 组件的代码等</p></blockquote></li> <li><p><code>./pkg/api</code>和<code>./pkg/apis</code></p> <blockquote><p>api 文件下包含 OpenAPI 相关的模型定义等内容，用于根据 OpenAPI 规范形成符合规定的 API</p></blockquote> <blockquote><p>apis 是包含内建 API Groups 和 API Objects 的，和 scheme 相关的代码大部分在这里</p></blockquote></li> <li><p><code>./plugin</code></p> <blockquote><p>Kubernetes 内建的 plugin 实现，包含 admission 和 auth 两个部分</p></blockquote></li></ul> <h2 id="api-server-启动过程"><a href="#api-server-启动过程" class="header-anchor">#</a> API Server 启动过程</h2> <p><strong>重点</strong></p> <ul><li><p><code>API Object</code></p> <blockquote><p>Kubernetes 内部管理的基本元素，是 k8s 在 ETCD 中信息存储单元。</p> <p>例如：Deployment、Pod、Service 都是 API Object，代码内部也常用 &quot;API&quot; 来称呼他们。</p></blockquote></li> <li><p><code>API Group</code></p> <blockquote><p>一组 API Object 组成的一个具有共性的对象集合。</p> <p>例如：apps 这个 group 它是由 Deployment、ReplicaSet、StatefulSet 等 API Object 组成的</p></blockquote></li> <li><p><code>Legacy API Object</code></p> <blockquote><p>绝大多数的 API Object 都被归在某个 API Group 下面，特别是新版本引入的一定会遵从这一原则，但在 k8s 项目初始化阶段引入的 API Object 没有显示定义在 API Group。例如 Pod</p> <p>Event、Node 等。在代码中有时也称呼他们为 &quot;core&quot; API Object</p></blockquote></li></ul> <p><strong><a href="https://brook-w.com/pages/b4af77/" target="_blank" rel="noopener noreferrer">了解 Cobra<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></strong></p> <details class="custom-block details"><summary>示例 （kube-apiserver）</summary> <div class="language-go extra-class"><pre class="language-go"><code><span class="token keyword">func</span> <span class="token function">NewAPIServerCommand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span>cobra<span class="token punctuation">.</span>Command <span class="token punctuation">{</span>
+	s <span class="token operator">:=</span> options<span class="token punctuation">.</span><span class="token function">NewServerRunOptions</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	cmd <span class="token operator">:=</span> <span class="token operator">&amp;</span>cobra<span class="token punctuation">.</span>Command<span class="token punctuation">{</span>
+		Use<span class="token punctuation">:</span> <span class="token string">&quot;kube-apiserver&quot;</span><span class="token punctuation">,</span>
+		Long<span class="token punctuation">:</span> <span class="token string">`The Kubernetes API server validates and configures data
+for the api objects which include pods, services, replicationcontrollers, and
+others. The API Server services REST operations and provides the frontend to the
+cluster's shared state through which all other components interact.`</span><span class="token punctuation">,</span>
+
+		<span class="token comment">// stop printing usage when the command errors</span>
+		SilenceUsage<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+		PersistentPreRunE<span class="token punctuation">:</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token operator">*</span>cobra<span class="token punctuation">.</span>Command<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span>
+			<span class="token comment">// silence client-go warnings.</span>
+			<span class="token comment">// kube-apiserver loopback clients should not log self-issued warnings.</span>
+			rest<span class="token punctuation">.</span><span class="token function">SetDefaultWarningHandler</span><span class="token punctuation">(</span>rest<span class="token punctuation">.</span>NoWarnings<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+			<span class="token keyword">return</span> <span class="token boolean">nil</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		RunE<span class="token punctuation">:</span> <span class="token keyword">func</span><span class="token punctuation">(</span>cmd <span class="token operator">*</span>cobra<span class="token punctuation">.</span>Command<span class="token punctuation">,</span> args <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span>
+			verflag<span class="token punctuation">.</span><span class="token function">PrintAndExitIfRequested</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			fs <span class="token operator">:=</span> cmd<span class="token punctuation">.</span><span class="token function">Flags</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+			<span class="token comment">// Activate logging as soon as possible, after that</span>
+			<span class="token comment">// show flags with the final logging configuration.</span>
+			<span class="token keyword">if</span> err <span class="token operator">:=</span> s<span class="token punctuation">.</span>Logs<span class="token punctuation">.</span><span class="token function">ValidateAndApply</span><span class="token punctuation">(</span>utilfeature<span class="token punctuation">.</span>DefaultFeatureGate<span class="token punctuation">)</span><span class="token punctuation">;</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+				<span class="token keyword">return</span> err
+			<span class="token punctuation">}</span>
+			cliflag<span class="token punctuation">.</span><span class="token function">PrintFlags</span><span class="token punctuation">(</span>fs<span class="token punctuation">)</span>
+
+			<span class="token comment">// set default options</span>
+			completedOptions<span class="token punctuation">,</span> err <span class="token operator">:=</span> <span class="token function">Complete</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+			<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+				<span class="token keyword">return</span> err
+			<span class="token punctuation">}</span>
+
+			<span class="token comment">// validate options</span>
+			<span class="token keyword">if</span> errs <span class="token operator">:=</span> completedOptions<span class="token punctuation">.</span><span class="token function">Validate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token function">len</span><span class="token punctuation">(</span>errs<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+				<span class="token keyword">return</span> utilerrors<span class="token punctuation">.</span><span class="token function">NewAggregate</span><span class="token punctuation">(</span>errs<span class="token punctuation">)</span>
+			<span class="token punctuation">}</span>
+
+			<span class="token keyword">return</span> <span class="token function">Run</span><span class="token punctuation">(</span>completedOptions<span class="token punctuation">,</span> genericapiserver<span class="token punctuation">.</span><span class="token function">SetupSignalHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+		Args<span class="token punctuation">:</span> <span class="token keyword">func</span><span class="token punctuation">(</span>cmd <span class="token operator">*</span>cobra<span class="token punctuation">.</span>Command<span class="token punctuation">,</span> args <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span>
+			<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> arg <span class="token operator">:=</span> <span class="token keyword">range</span> args <span class="token punctuation">{</span>
+				<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>arg<span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+					<span class="token keyword">return</span> fmt<span class="token punctuation">.</span><span class="token function">Errorf</span><span class="token punctuation">(</span><span class="token string">&quot;%q does not take any arguments, got %q&quot;</span><span class="token punctuation">,</span> cmd<span class="token punctuation">.</span><span class="token function">CommandPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span>
+				<span class="token punctuation">}</span>
+			<span class="token punctuation">}</span>
+			<span class="token keyword">return</span> <span class="token boolean">nil</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token punctuation">}</span>
+
+	fs <span class="token operator">:=</span> cmd<span class="token punctuation">.</span><span class="token function">Flags</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	namedFlagSets <span class="token operator">:=</span> s<span class="token punctuation">.</span><span class="token function">Flags</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	verflag<span class="token punctuation">.</span><span class="token function">AddFlags</span><span class="token punctuation">(</span>namedFlagSets<span class="token punctuation">.</span><span class="token function">FlagSet</span><span class="token punctuation">(</span><span class="token string">&quot;global&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	globalflag<span class="token punctuation">.</span><span class="token function">AddGlobalFlags</span><span class="token punctuation">(</span>namedFlagSets<span class="token punctuation">.</span><span class="token function">FlagSet</span><span class="token punctuation">(</span><span class="token string">&quot;global&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> cmd<span class="token punctuation">.</span><span class="token function">Name</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> logs<span class="token punctuation">.</span><span class="token function">SkipLoggingConfigurationFlags</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	options<span class="token punctuation">.</span><span class="token function">AddCustomGlobalFlags</span><span class="token punctuation">(</span>namedFlagSets<span class="token punctuation">.</span><span class="token function">FlagSet</span><span class="token punctuation">(</span><span class="token string">&quot;generic&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> f <span class="token operator">:=</span> <span class="token keyword">range</span> namedFlagSets<span class="token punctuation">.</span>FlagSets <span class="token punctuation">{</span>
+		fs<span class="token punctuation">.</span><span class="token function">AddFlagSet</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+
+	cols<span class="token punctuation">,</span> <span class="token boolean">_</span><span class="token punctuation">,</span> <span class="token boolean">_</span> <span class="token operator">:=</span> term<span class="token punctuation">.</span><span class="token function">TerminalSize</span><span class="token punctuation">(</span>cmd<span class="token punctuation">.</span><span class="token function">OutOrStdout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	cliflag<span class="token punctuation">.</span><span class="token function">SetUsageAndHelpFunc</span><span class="token punctuation">(</span>cmd<span class="token punctuation">,</span> namedFlagSets<span class="token punctuation">,</span> cols<span class="token punctuation">)</span>
+
+	<span class="token keyword">return</span> cmd
+<span class="token punctuation">}</span>
+</code></pre></div></details> <h3 id="代码预览"><a href="#代码预览" class="header-anchor">#</a> 代码预览</h3> <h4 id="目录结构"><a href="#目录结构" class="header-anchor">#</a> 目录结构</h4> <div class="language-sh extra-class"><pre class="language-sh"><code>tree cmd/kube-apiserver
+<span class="token builtin class-name">.</span>
+├── apiserver.go
+├── app
+│   ├── aggregator.go
+│   ├── apiextensions.go
+│   ├── options
+│   │   ├── globalflags.go
+│   │   ├── globalflags_providerless.go
+│   │   ├── globalflags_providers.go
+│   │   ├── globalflags_test.go
+│   │   ├── options.go
+│   │   ├── options_test.go
+│   │   ├── validation.go
+│   │   └── validation_test.go
+│   ├── server.go
+│   ├── server_test.go
+│   └── testing
+│       ├── testdata
+│       │   ├── <span class="token number">127.0</span>.0.1_10.0.0.1_kubernetes.default.svc-kubernetes.default-kubernetes-localhost.crt
+│       │   ├── <span class="token number">127.0</span>.0.1_10.0.0.1_kubernetes.default.svc-kubernetes.default-kubernetes-localhost.key
+│       │   └── README.md
+│       └── testserver.go
+└── OWNERS
+</code></pre></div><h4 id="主程序"><a href="#主程序" class="header-anchor">#</a> 主程序</h4> <div class="language-go extra-class"><pre class="language-go"><code><span class="token comment">// cmd/kube-apiserver/apiserver.go</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	command <span class="token operator">:=</span> app<span class="token punctuation">.</span><span class="token function">NewAPIServerCommand</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	code <span class="token operator">:=</span> cli<span class="token punctuation">.</span><span class="token function">Run</span><span class="token punctuation">(</span>command<span class="token punctuation">)</span>
+	os<span class="token punctuation">.</span><span class="token function">Exit</span><span class="token punctuation">(</span>code<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h4 id="命令主体"><a href="#命令主体" class="header-anchor">#</a> 命令主体</h4> <div class="language-go extra-class"><pre class="language-go"><code><span class="token comment">// cmd/kube-apiserver/app/server.go</span>
+cmd <span class="token operator">:=</span> <span class="token operator">&amp;</span>cobra<span class="token punctuation">.</span>Command<span class="token punctuation">{</span>
+    	<span class="token comment">// Use Long 描述用途</span>
+		Use<span class="token punctuation">:</span> <span class="token string">&quot;kube-apiserver&quot;</span><span class="token punctuation">,</span>
+		Long<span class="token punctuation">:</span> <span class="token string">`The Kubernetes API server validates and configures data
+for the api objects which include pods, services, replicationcontrollers, and
+others. The API Server services REST operations and provides the frontend to the
+cluster's shared state through which all other components interact.`</span><span class="token punctuation">,</span>
+
+		<span class="token comment">// stop printing usage when the command errors</span>
+		SilenceUsage<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+
+    	<span class="token comment">// 在 Run 之前运行一些前置的指令，类似于拦截器</span>
+		PersistentPreRunE<span class="token punctuation">:</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token operator">*</span>cobra<span class="token punctuation">.</span>Command<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span>
+			<span class="token comment">// silence client-go warnings.</span>
+			<span class="token comment">// kube-apiserver loopback clients should not log self-issued warnings.</span>
+			rest<span class="token punctuation">.</span><span class="token function">SetDefaultWarningHandler</span><span class="token punctuation">(</span>rest<span class="token punctuation">.</span>NoWarnings<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+			<span class="token keyword">return</span> <span class="token boolean">nil</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+    	<span class="token comment">// 最终执行的指令</span>
+		RunE<span class="token punctuation">:</span> <span class="token keyword">func</span><span class="token punctuation">(</span>cmd <span class="token operator">*</span>cobra<span class="token punctuation">.</span>Command<span class="token punctuation">,</span> args <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span>
+			verflag<span class="token punctuation">.</span><span class="token function">PrintAndExitIfRequested</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			fs <span class="token operator">:=</span> cmd<span class="token punctuation">.</span><span class="token function">Flags</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+			<span class="token comment">// Activate logging as soon as possible, after that</span>
+			<span class="token comment">// show flags with the final logging configuration.</span>
+			<span class="token keyword">if</span> err <span class="token operator">:=</span> s<span class="token punctuation">.</span>Logs<span class="token punctuation">.</span><span class="token function">ValidateAndApply</span><span class="token punctuation">(</span>utilfeature<span class="token punctuation">.</span>DefaultFeatureGate<span class="token punctuation">)</span><span class="token punctuation">;</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+				<span class="token keyword">return</span> err
+			<span class="token punctuation">}</span>
+			cliflag<span class="token punctuation">.</span><span class="token function">PrintFlags</span><span class="token punctuation">(</span>fs<span class="token punctuation">)</span>
+
+			<span class="token comment">// set default options</span>
+			completedOptions<span class="token punctuation">,</span> err <span class="token operator">:=</span> <span class="token function">Complete</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+			<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+				<span class="token keyword">return</span> err
+			<span class="token punctuation">}</span>
+
+			<span class="token comment">// validate options</span>
+			<span class="token keyword">if</span> errs <span class="token operator">:=</span> completedOptions<span class="token punctuation">.</span><span class="token function">Validate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token function">len</span><span class="token punctuation">(</span>errs<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+				<span class="token keyword">return</span> utilerrors<span class="token punctuation">.</span><span class="token function">NewAggregate</span><span class="token punctuation">(</span>errs<span class="token punctuation">)</span>
+			<span class="token punctuation">}</span>
+
+			<span class="token keyword">return</span> <span class="token function">Run</span><span class="token punctuation">(</span>completedOptions<span class="token punctuation">,</span> genericapiserver<span class="token punctuation">.</span><span class="token function">SetupSignalHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+    	<span class="token comment">// 检验 args 是否满足需求</span>
+		Args<span class="token punctuation">:</span> <span class="token keyword">func</span><span class="token punctuation">(</span>cmd <span class="token operator">*</span>cobra<span class="token punctuation">.</span>Command<span class="token punctuation">,</span> args <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span>
+			<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> arg <span class="token operator">:=</span> <span class="token keyword">range</span> args <span class="token punctuation">{</span>
+				<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>arg<span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+					<span class="token keyword">return</span> fmt<span class="token punctuation">.</span><span class="token function">Errorf</span><span class="token punctuation">(</span><span class="token string">&quot;%q does not take any arguments, got %q&quot;</span><span class="token punctuation">,</span> cmd<span class="token punctuation">.</span><span class="token function">CommandPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span>
+				<span class="token punctuation">}</span>
+			<span class="token punctuation">}</span>
+			<span class="token keyword">return</span> <span class="token boolean">nil</span>
+		<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token punctuation">}</span>
+</code></pre></div><h4 id="调用流程"><a href="#调用流程" class="header-anchor">#</a> 调用流程</h4> <h5 id="基本启动流程"><a href="#基本启动流程" class="header-anchor">#</a> 基本启动流程</h5> <p><a href="https://github.com/kubernetes/kubernetes/blob/v1.24.0/cmd/kube-apiserver/apiserver.go" target="_blank" rel="noopener noreferrer">cmd/kube-apiserver/app/server.go<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <div class="spinner" style="background:rgb(66, 185, 131);" data-v-1bbcb91a></div><div class="spinner" style="background:rgb(66, 185, 131);" data-v-1bbcb91a></div><p><strong>Server Chain</strong></p> <div class="spinner" style="background:rgb(66, 185, 131);" data-v-1bbcb91a></div><ul><li>Aggregation Server
+<blockquote><p>负责转发请求到 Master 或 Custom API Server</p></blockquote></li> <li>Master
+<blockquote><p>Kube API Server，负责 Build-in 的 API Object 相关的处理</p> <p>例如：Pod，Event，apps ...</p></blockquote></li> <li>Extebsion Server
+<blockquote><p>Customer Resource 的处理由它完成，包括 CR 和 CRD</p></blockquote></li> <li>Not Found Handler
+<blockquote><p>找不到相应的 API Object 的时候，返回 404</p></blockquote></li></ul> <div class="custom-block tip"><p class="custom-block-title">提示</p> <p>在真正构建的时候会生成一个 pipeline 是从右向左，依次构建，当前层处理不了的请求流向下一层，直到 <code>Not Found Handler</code></p></div> <h5 id="rune-启动"><a href="#rune-启动" class="header-anchor">#</a> RunE 启动</h5> <p><a href="https://github.com/kubernetes/kubernetes/blob/v1.24.0/cmd/kube-apiserver/app/server.go" target="_blank" rel="noopener noreferrer">cmd/kube-apiserver/app/server.go<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <div class="spinner" style="background:rgb(66, 185, 131);" data-v-1bbcb91a></div><h5 id="master-中装载-api"><a href="#master-中装载-api" class="header-anchor">#</a> Master 中装载 API</h5> <p>API Server 的 &quot;内容&quot; 是 API Object，通过 Restful 服务对外提供操作 API Object 的能力</p> <p>那么 API Server 是如何建立起针对各个 API Object 的服务呢？</p> <div id="master-api-xmind"></div> <h2 id="scheme-详解"><a href="#scheme-详解" class="header-anchor">#</a> Scheme 详解</h2> <h3 id="构造并填充-scheme"><a href="#构造并填充-scheme" class="header-anchor">#</a> 构造并填充 Scheme</h3> <p>Scheme: 存储当前 API Server 知道的 API Group (类似于 Windows 注册表)</p> <p><strong>Scheme 是如何填充的呢？</strong></p> <!----> <!----> <h3 id="概念词组"><a href="#概念词组" class="header-anchor">#</a> 概念词组</h3> <ul><li><p><strong>Version</strong></p> <blockquote><p>每个 API Group 都会有一个 version。每一个 version 会包含多个 kind (一个 kind 会出现在多个 version 下)</p> <p>这些 Version 又称为 External Version，他们面向 API Server 外部</p> <p>Internal Version 是 API Server 在内部程序中处理数据时对 API Object 的实际类型</p></blockquote></li> <li><p><strong>GVK</strong></p> <blockquote><p>Group、Veersion、Kind 这三个元素唯一确定了一个 Kind。程序中，GVK 可以理解为一个字符串，三者拼接的结果（程序中是一个含三字段的结构体）</p></blockquote></li> <li><p><strong>&quot;Type&quot;</strong></p> <blockquote><p>代码中常见的 &quot;Type&quot;，例如 gvk2Type 字段。这里的 Type 是一个 API Object 结构体类型（元数据），是程序中处理一个 Object 时使用的数据结构</p></blockquote></li></ul> <h3 id="scheme-作用和应用场景"><a href="#scheme-作用和应用场景" class="header-anchor">#</a> Scheme 作用和应用场景</h3> <p><strong>Scheme 是一个结构体，内含处理内外部 Version 之间的转换，GVK 和 GoType 之间转换时用的数据和方法</strong></p> <ul><li><p><strong>GVK 与 Go Type 之间的转换</strong></p> <blockquote><p>Scheme 内部又两个 <code>map</code>，分别对应 gvk → type 和 type → gvk；使得二者可以互相找到</p></blockquote></li> <li><p><strong>API Object 的默认值</strong></p> <blockquote><p>API Object 有许多属性，使用者在操作一个 object 时，不太可能给出所有的属性值；另外在 Object 从一个 Version 转换到另一个 Version 时也可能不需要为不存在对应关系的字段填值</p></blockquote></li> <li><p><strong>内外部 Version 之间的 Convert</strong></p> <blockquote><p>所有外部的 Version 都会转换为 内部 Version，转换函数时记录在 Scheme 之内的</p></blockquote></li></ul> <p><strong>Scheme 代码</strong></p> <p><img alt="image" data-src="https://cdn.staticaly.com/gh/brook-w/image-hosting@master/k8s/image.1n3mk4u38iio.webp" loading="lazy" class="lazy"></p> <details class="custom-block details"><summary>Scheme 代码</summary> <div class="language-go extra-class"><pre class="language-go"><code><span class="token comment">// vendor/k8s.io/apimachinery/pkg/runtime/scheme.go</span>
+<span class="token keyword">type</span> Scheme <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	<span class="token comment">// gvkToType allows one to figure out the go type of an object with</span>
+	<span class="token comment">// the given version and name.</span>
+	gvkToType <span class="token keyword">map</span><span class="token punctuation">[</span>schema<span class="token punctuation">.</span>GroupVersionKind<span class="token punctuation">]</span>reflect<span class="token punctuation">.</span>Type
+
+	<span class="token comment">// typeToGVK allows one to find metadata for a given go object.</span>
+	<span class="token comment">// The reflect.Type we index by should *not* be a pointer.</span>
+	typeToGVK <span class="token keyword">map</span><span class="token punctuation">[</span>reflect<span class="token punctuation">.</span>Type<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span>schema<span class="token punctuation">.</span>GroupVersionKind
+
+	<span class="token comment">// unversionedTypes are transformed without conversion in ConvertToVersion.</span>
+	unversionedTypes <span class="token keyword">map</span><span class="token punctuation">[</span>reflect<span class="token punctuation">.</span>Type<span class="token punctuation">]</span>schema<span class="token punctuation">.</span>GroupVersionKind
+
+	<span class="token comment">// unversionedKinds are the names of kinds that can be created in the context of any group</span>
+	<span class="token comment">// or version</span>
+	<span class="token comment">// TODO: resolve the status of unversioned types.</span>
+	unversionedKinds <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span>reflect<span class="token punctuation">.</span>Type
+
+	<span class="token comment">// Map from version and resource to the corresponding func to convert</span>
+	<span class="token comment">// resource field labels in that version to internal version.</span>
+	fieldLabelConversionFuncs <span class="token keyword">map</span><span class="token punctuation">[</span>schema<span class="token punctuation">.</span>GroupVersionKind<span class="token punctuation">]</span>FieldLabelConversionFunc
+
+	<span class="token comment">// defaulterFuncs is a map to funcs to be called with an object to provide defaulting</span>
+	<span class="token comment">// the provided object must be a pointer.</span>
+	defaulterFuncs <span class="token keyword">map</span><span class="token punctuation">[</span>reflect<span class="token punctuation">.</span>Type<span class="token punctuation">]</span><span class="token keyword">func</span><span class="token punctuation">(</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+	<span class="token comment">// converter stores all registered conversion functions. It also has</span>
+	<span class="token comment">// default converting behavior.</span>
+	converter <span class="token operator">*</span>conversion<span class="token punctuation">.</span>Converter
+
+	<span class="token comment">// versionPriority is a map of groups to ordered lists of versions for those groups indicating the</span>
+	<span class="token comment">// default priorities of these versions as registered in the scheme</span>
+	versionPriority <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>
+
+	<span class="token comment">// observedVersions keeps track of the order we've seen versions during type registration</span>
+	observedVersions <span class="token punctuation">[</span><span class="token punctuation">]</span>schema<span class="token punctuation">.</span>GroupVersion
+
+	<span class="token comment">// schemeName is the name of this scheme.  If you don't specify a name, the stack of the NewScheme caller will be used.</span>
+	<span class="token comment">// This is useful for error reporting to indicate the origin of the scheme.</span>
+	schemeName <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details> <h3 id="填充-scheme-代码-internal-version"><a href="#填充-scheme-代码-internal-version" class="header-anchor">#</a> 填充 Scheme 代码 —— Internal Version</h3> <p><img alt="image" data-src="https://cdn.staticaly.com/gh/brook-w/image-hosting@master/k8s/image.2ubjfbnciqg.webp" loading="lazy" class="lazy"></p> <h3 id="填充-scheme-代码-external-version"><a href="#填充-scheme-代码-external-version" class="header-anchor">#</a> 填充 Scheme 代码 —— External Version</h3> <p><img alt="image" data-src="https://cdn.staticaly.com/gh/brook-w/image-hosting@master/k8s/image.1tgr339c2veo.webp" loading="lazy" class="lazy"></p> <h3 id="converter-和-defaulter-的代码生成"><a href="#converter-和-defaulter-的代码生成" class="header-anchor">#</a> Converter 和 Defaulter 的代码生成</h3> <p><img alt="image" data-src="https://cdn.staticaly.com/gh/brook-w/image-hosting@master/k8s/image.4sfz3kpn7t60.webp" loading="lazy" class="lazy"></p></div></div>  <div class="page-edit"><!----> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2023/02/15, 03:43:27</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/pages/21e760/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">（二）编译运行并调试源码</div></a> <a href="/pages/0214d2/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">2. Generic Server</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/pages/21e760/" class="prev">（二）编译运行并调试源码</a></span> <span class="next"><a href="/pages/0214d2/">2. Generic Server</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/pages/470b10/"><div>
+            概述
+            <!----></div></a> <span class="date">02-10</span></dt></dl><dl><dd>02</dd> <dt><a href="/pages/33da11/"><div>
+            （四）Aggregated API Server 的实现
+            <!----></div></a> <span class="date">02-10</span></dt></dl><dl><dd>03</dd> <dt><a href="/pages/1cc02c/"><div>
+            8. 登录与鉴权的实现
+            <!----></div></a> <span class="date">02-09</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div>友站:
+    <span><a href="https://www.brook-w.com/" target="_blank">www.brook-w.com</a></span></div> <div class="icons"></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2019-2023
+    <span>Brook-w | <a href="https://github.com/brook-w/blogs/blob/master/LICENSE" target="_blank">GPL License</a></span> <div><a href="https://beian.miit.gov.cn/" target="_blank">
+      京ICP备2020045721号-2
+    </a></div></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <div class="body-bg" style="background:url() center center / cover no-repeat;opacity:0.5;"></div> <!----> <!----></div><div class="global-ui"></div></div>
+  <script src="/assets/js/app.4abec194.js" defer></script><script src="/assets/js/2.7bb6bd59.js" defer></script><script src="/assets/js/3.d91ac3a8.js" defer></script><script src="/assets/js/11.969be0b0.js" defer></script>
+
+</body>
+
+</html>
