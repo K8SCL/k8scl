@@ -1,27 +1,18 @@
 <template>
   <div class="home-wrapper">
     <!-- banner块 s -->
-    <div
-      class="banner"
-      :class="{ 'hide-banner': !showBanner }"
-      :style="bannerBgStyle"
-    >
-      <div
-        class="banner-conent"
-        :style="
-          !homeData.features && !homeData.heroImage && `padding-top: 7rem`
-        "
-      >
+    <div class="banner" :class="{ 'hide-banner': !showBanner }" :style="bannerBgStyle">
+      <div class="banner-conent" :style="
+        !homeData.features && !homeData.heroImage && `padding-top: 7rem`
+      ">
         <header class="hero">
-          <img
-            v-if="homeData.heroImage"
-            :src="$withBase(homeData.heroImage)"
-            :alt="homeData.heroAlt"
-          />
-          <h1 v-if="homeData.heroText" id="main-title">
+          <img v-if="homeData.heroImage" :src="$withBase(homeData.heroImage)" :alt="homeData.heroAlt" />
+          <h1 v-if="homeData.heroText" id="main-title"
+            :style="cur_mode === 'light' ? `color: black;opacity:0.8` : `color: white;`">
             {{ homeData.heroText }}
           </h1>
-          <p v-if="homeData.tagline" class="description">
+          <p v-if="homeData.tagline" class="description"
+            :style="cur_mode === 'light' ? `color: black;opacity:0.8` : `color: white;`">
             {{ homeData.tagline }}
           </p>
           <p class="action" v-if="homeData.actionText && homeData.actionLink">
@@ -31,28 +22,14 @@
 
         <!-- PC端features块 s -->
         <div class="features" v-if="hasFeatures && !isMQMobile">
-          <div
-            class="feature"
-            v-for="(feature, index) in homeData.features"
-            :key="index"
-          >
+          <div class="feature" v-for="(feature, index) in homeData.features" :key="index">
             <router-link v-if="feature.link" :to="feature.link">
-              <img
-                class="feature-img"
-                v-if="feature.imgUrl"
-                :src="$withBase(feature.imgUrl)"
-                :alt="feature.title"
-              />
+              <img class="feature-img" v-if="feature.imgUrl" :src="$withBase(feature.imgUrl)" :alt="feature.title" />
               <h2>{{ feature.title }}</h2>
               <p>{{ feature.details }}</p>
             </router-link>
             <a v-else href="javascript:;">
-              <img
-                class="feature-img"
-                v-if="feature.imgUrl"
-                :src="$withBase(feature.imgUrl)"
-                :alt="feature.title"
-              />
+              <img class="feature-img" v-if="feature.imgUrl" :src="$withBase(feature.imgUrl)" :alt="feature.title" />
               <h2>{{ feature.title }}</h2>
               <p>{{ feature.details }}</p>
             </a>
@@ -67,28 +44,16 @@
         <div class="banner-wrapper">
           <div class="slide-banner-scroll" ref="slide">
             <div class="slide-banner-wrapper">
-              <div
-                class="slide-item"
-                v-for="(feature, index) in homeData.features"
-                :key="index"
-              >
+              <div class="slide-item" v-for="(feature, index) in homeData.features" :key="index">
                 <router-link v-if="feature.link" :to="feature.link">
-                  <img
-                    class="feature-img"
-                    v-if="feature.imgUrl"
-                    :src="$withBase(feature.imgUrl)"
-                    :alt="feature.title"
-                  />
+                  <img class="feature-img" v-if="feature.imgUrl" :src="$withBase(feature.imgUrl)"
+                    :alt="feature.title" />
                   <h2>{{ feature.title }}</h2>
                   <p>{{ feature.details }}</p>
                 </router-link>
                 <a v-else href="javascript:;">
-                  <img
-                    class="feature-img"
-                    v-if="feature.imgUrl"
-                    :src="$withBase(feature.imgUrl)"
-                    :alt="feature.title"
-                  />
+                  <img class="feature-img" v-if="feature.imgUrl" :src="$withBase(feature.imgUrl)"
+                    :alt="feature.title" />
                   <h2>{{ feature.title }}</h2>
                   <p>{{ feature.details }}</p>
                 </a>
@@ -96,12 +61,8 @@
             </div>
           </div>
           <div class="docs-wrapper">
-            <span
-              class="doc"
-              v-for="(item, index) in homeData.features.length"
-              :key="index"
-              :class="{ active: currentPageIndex === index }"
-            ></span>
+            <span class="doc" v-for="(item, index) in homeData.features.length" :key="index"
+              :class="{ active: currentPageIndex === index }"></span>
           </div>
         </div>
       </div>
@@ -112,27 +73,16 @@
     <MainLayout>
       <template #mainLeft>
         <!-- 简约版文章列表 -->
-        <UpdateArticle
-          class="card-box"
-          v-if="homeData.postList === 'simple'"
-          :length="homeData.simplePostListLength || 10"
-          :moreArticle="
+        <UpdateArticle class="card-box" v-if="homeData.postList === 'simple'"
+          :length="homeData.simplePostListLength || 10" :moreArticle="
             $themeConfig.updateBar && $themeConfig.updateBar.moreArticle
-          "
-        />
+          " />
 
         <!-- 详情版文章列表 -->
-        <template
-          v-else-if="!homeData.postList || homeData.postList === 'detailed'"
-        >
+        <template v-else-if="!homeData.postList || homeData.postList === 'detailed'">
           <PostList :currentPage="currentPage" :perPage="perPage" />
-          <Pagination
-            :total="total"
-            :perPage="perPage"
-            :currentPage="currentPage"
-            @getCurrentPage="handlePagination"
-            v-show="Math.ceil(total / perPage) > 1"
-          />
+          <Pagination :total="total" :perPage="perPage" :currentPage="currentPage" @getCurrentPage="handlePagination"
+            v-show="Math.ceil(total / perPage) > 1" />
         </template>
 
         <Content class="theme-vdoing-content custom card-box" />
@@ -140,24 +90,13 @@
 
       <template v-if="!homeData.hideRightBar" #mainRight>
         <BloggerBar v-if="$themeConfig.blogger" />
-        <CategoriesBar
-          v-if="
-            $themeConfig.category !== false &&
-            $categoriesAndTags.categories.length
-          "
-          :categoriesData="$categoriesAndTags.categories"
-          :length="10"
-        />
-        <TagsBar
-          v-if="$themeConfig.tag !== false && $categoriesAndTags.tags.length"
-          :tagsData="$categoriesAndTags.tags"
-          :length="30"
-        />
-        <div
-          class="custom-html-box card-box"
-          v-if="homeSidebarB"
-          v-html="homeSidebarB"
-        ></div>
+        <CategoriesBar v-if="
+          $themeConfig.category !== false &&
+          $categoriesAndTags.categories.length
+        " :categoriesData="$categoriesAndTags.categories" :length="10" />
+        <TagsBar v-if="$themeConfig.tag !== false && $categoriesAndTags.tags.length" :tagsData="$categoriesAndTags.tags"
+          :length="30" />
+        <div class="custom-html-box card-box" v-if="homeSidebarB" v-html="homeSidebarB"></div>
       </template>
     </MainLayout>
   </div>
@@ -196,6 +135,7 @@ export default {
       currentPage: 1, // 当前页,
       bannerBgStyle: "",
       showBanner: true,
+      cur_mode: storage.get("cur_mode")
     };
   },
   computed: {
@@ -240,6 +180,7 @@ export default {
     EventBus.on("modeChange", () => {
       this.showBanner = this.getShowBanner();
       this.bannerBgStyle = this.getBannerBgStyle();
+      this.cur_mode = storage.get("cur_mode")
     });
   },
   mounted() {
@@ -444,9 +385,9 @@ export default {
         margin-top: 2.5rem;
         display: flex;
         flex-wrap: wrap;
-        align-items: flex-start;
+        align-items: flex-end;
         align-content: stretch;
-        justify-content: space-between;
+        justify-content: center;
       }
 
       .feature {
